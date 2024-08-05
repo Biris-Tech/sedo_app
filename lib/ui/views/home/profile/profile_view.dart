@@ -82,7 +82,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                     GestureDetector(
                       onTap: () => viewModel.goToUpdateProfileView(),
                       child: SvgPicture.asset(
-                        AppImageConstants.blackPen,
+                        "assets/Box.svg",
                         height: 25,
                         width: 25,
                       ),
