@@ -221,5 +221,6 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
   @override
   RegisterViewModel viewModelBuilder(
     BuildContext context,
-  ) => RegisterViewModel();
+  ) =>
+      RegisterViewModel();
 }

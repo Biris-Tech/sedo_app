@@ -135,9 +135,7 @@ class DestinationinfoService with $CourierView {
           ),
         ),
         if (!isSmallScreen) const Expanded(child: SizedBox()),
-        
         const SizedBox(height: 16),
-       
         Padding(
           padding: const EdgeInsets.only(bottom: 30),
           child: Padding(

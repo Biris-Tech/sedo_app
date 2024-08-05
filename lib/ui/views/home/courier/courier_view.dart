@@ -39,7 +39,6 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
               mapType: MapType.normal,
               markers: viewModel.markers,
               polylines: viewModel.polylines,
-             
             ),
             if (viewModel.isContainerVisible == true)
               Positioned(

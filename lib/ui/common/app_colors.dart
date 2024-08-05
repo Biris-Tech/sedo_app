@@ -10,6 +10,7 @@ const Color kcVeryLightGrey = Color(0xFFE3E3E3);
 const Color kcBackgroundColor = kcDarkGreyColor;
 const Color kcInputBordersColors = Color(0xFF202020);
 const Color kcIconBottomColors = Color(0xFF404040);
+const Color kcTextGreyColor = Color(0xFF202020);
 LinearGradient linearcolor = const LinearGradient(colors: [
   Color(0xFF69023A),
   Color(0xFFC81577),

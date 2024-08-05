@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/ui/common/app_card.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/button_component.dart';
@@ -9,17 +10,17 @@ import 'package:sedo_app/ui/common/ui_helpers.dart';
 class DeliveryfinalizationService {
   Future bottomSheetDeliveryFinalization(
       BuildContext context,
-      int deliveryPrice,
-      int ancientPrice,
+      String deliveryPrice,
+      String ancientPrice,
       int remainingTimes,
       int deliveryRemainingTimes,
       String courierName,
       String courierPhoto,
       String product,
       String productDescription,
-      String selectedPayementIconPath,
+      String? selectedPayementIconPath,
       String selectedPayement,
-      String expressDeliveryTime,
+      String? expressDeliveryTime,
       final Function()? onPressed) {
     return showModalBottomSheet(
         context: context,
@@ -123,17 +124,19 @@ class DeliveryfinalizationService {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 28),
                     Padding(
                         padding: const EdgeInsets.only(left: 16, right: 28),
                         child: Row(children: [
                           // const SizedBox(
                           //   width: 16,
                           // ),
-                          SvgPicture.asset(selectedPayementIconPath,
-                              height: 22, width: 22),
+                          SvgPicture.asset(
+                              selectedPayementIconPath ?? 'assets/money.svg',
+                              height: 22,
+                              width: 22),
                           const SizedBox(
-                            width: 4,
+                            width: 6,
                           ),
                           TextComponent(
                             selectedPayement,
@@ -152,33 +155,36 @@ class DeliveryfinalizationService {
                     const SizedBox(
                       height: 40,
                     ),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 28),
-                        child: Row(children: [
-                          // const SizedBox(
-                          //   width: 16,
-                          // ),
-                          SvgPicture.asset("assets/Espress.svg",
-                              height: 22, width: 22),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          TextComponent(
-                            "Livraison express: $expressDeliveryTime",
-                            fontsize: 14,
-                            fontweight: FontWeight.w700,
-                            textcolor: const Color(0xFF202020),
-                          ),
-                          const Expanded(
-                            child: SizedBox(
-                              width: 4,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                          ),
-                        ])),
+                    deliveryTime != ""
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 28),
+                            child: Row(children: [
+                              // const SizedBox(
+                              //   width: 16,
+                              // ),
+                              SvgPicture.asset("assets/Espress.svg",
+                                  height: 22, width: 22),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              TextComponent(
+                                "Livraison express: $expressDeliveryTime",
+                                fontsize: 14,
+                                fontweight: FontWeight.w700,
+                                textcolor: kcPrimaryColor.withOpacity(0.5),
+                              ),
+
+                              const Expanded(
+                                child: SizedBox(
+                                  width: 4,
+                                ),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 16,
+                              ),
+                            ]))
+                        : Container(),
                     const Expanded(child: SizedBox()),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 28),

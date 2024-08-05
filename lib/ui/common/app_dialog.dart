@@ -5,7 +5,7 @@ void showCustomDialog(BuildContext context,
     {required String title,
     required String description,
     required String buttonText,
-    required Function()? onPressed}) {
+    required Function() onPressed}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {

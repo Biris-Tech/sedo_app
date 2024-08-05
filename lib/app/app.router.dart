@@ -5,8 +5,12 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i14;
+import 'package:flutter/material.dart' as _i18;
 import 'package:flutter/material.dart';
+import 'package:sedo_app/ui/views/home/profile/account_setting/account_setting_view.dart'
+    as _i14;
+import 'package:sedo_app/ui/views/home/profile/historic_courses/historic_courses_view.dart'
+    as _i17;
 import 'package:sedo_app/ui/views/home/courier/courier_view.dart' as _i11;
 import 'package:sedo_app/ui/views/home/home_view.dart' as _i2;
 import 'package:sedo_app/ui/views/home/notifications/notifications_view.dart'
@@ -18,10 +22,14 @@ import 'package:sedo_app/ui/views/login/login_view.dart' as _i4;
 import 'package:sedo_app/ui/views/otp/otp_view.dart' as _i7;
 import 'package:sedo_app/ui/views/register/password/password_view.dart' as _i8;
 import 'package:sedo_app/ui/views/register/register_view.dart' as _i5;
+import 'package:sedo_app/ui/views/home/profile/set_notifications/set_notifications_view.dart'
+    as _i15;
 import 'package:sedo_app/ui/views/startup/startup_view.dart' as _i3;
+import 'package:sedo_app/ui/views/home/profile/update_profil/update_profil_view.dart'
+    as _i16;
 import 'package:sedo_app/ui/views/welcome/welcome_view.dart' as _i6;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i15;
+import 'package:stacked_services/stacked_services.dart' as _i19;
 
 class Routes {
   static const homeView = '/home-view';
@@ -48,6 +56,14 @@ class Routes {
 
   static const profileView = '/profile-view';
 
+  static const accountSettingView = '/account-setting-view';
+
+  static const setNotificationsView = '/set-notifications-view';
+
+  static const updateProfilView = '/update-profil-view';
+
+  static const historicCoursesView = '/historic-courses-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -61,6 +77,10 @@ class Routes {
     courierView,
     notificationsView,
     profileView,
+    accountSettingView,
+    setNotificationsView,
+    updateProfilView,
+    historicCoursesView,
   };
 }
 
@@ -114,78 +134,118 @@ class StackedRouter extends _i1.RouterBase {
       Routes.profileView,
       page: _i13.ProfileView,
     ),
+    _i1.RouteDef(
+      Routes.accountSettingView,
+      page: _i14.AccountSettingView,
+    ),
+    _i1.RouteDef(
+      Routes.setNotificationsView,
+      page: _i15.SetNotificationView,
+    ),
+    _i1.RouteDef(
+      Routes.updateProfilView,
+      page: _i16.UpdateProfileView,
+    ),
+    _i1.RouteDef(
+      Routes.historicCoursesView,
+      page: _i17.HistoricCoursesView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.LoginView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LoginView(),
         settings: data,
       );
     },
     _i5.RegisterView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.RegisterView(),
         settings: data,
       );
     },
     _i6.WelcomeView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.WelcomeView(),
         settings: data,
       );
     },
     _i7.OtpView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.OtpView(),
         settings: data,
       );
     },
     _i8.PasswordView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.PasswordView(),
         settings: data,
       );
     },
     _i9.ReceptionView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.ReceptionView(),
         settings: data,
       );
     },
     _i10.PlaceView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.PlaceView(),
         settings: data,
       );
     },
     _i11.CourierView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.CourierView(),
         settings: data,
       );
     },
     _i12.NotificationsView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.NotificationsView(),
         settings: data,
       );
     },
     _i13.ProfileView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.ProfileView(),
+        settings: data,
+      );
+    },
+    _i14.AccountSettingView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i14.AccountSettingView(),
+        settings: data,
+      );
+    },
+    _i15.SetNotificationView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i15.SetNotificationView(),
+        settings: data,
+      );
+    },
+    _i16.UpdateProfileView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i16.UpdateProfileView(),
+        settings: data,
+      );
+    },
+    _i17.HistoricCoursesView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i17.HistoricCoursesView(),
         settings: data,
       );
     },
@@ -198,7 +258,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i15.NavigationService {
+extension NavigatorStateExtension on _i19.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -367,6 +427,62 @@ extension NavigatorStateExtension on _i15.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToAccountSettingView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.accountSettingView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToSetNotificationsView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.setNotificationsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToUpdateProfilView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.updateProfilView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToHistoricCoursesView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.historicCoursesView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -529,6 +645,62 @@ extension NavigatorStateExtension on _i15.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.profileView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithAccountSettingView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.accountSettingView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithSetNotificationsView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.setNotificationsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithUpdateProfilView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.updateProfilView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithHistoricCoursesView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.historicCoursesView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

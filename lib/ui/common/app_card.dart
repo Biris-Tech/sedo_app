@@ -74,7 +74,8 @@ class _BillCardState extends State<BillCard> {
   }
 }
 
-Container courierCard(int deliveryPrice, int ancientPrice, int remainingTimes) {
+Container courierCard(
+    String deliveryPrice, String ancientPrice, int remainingTimes) {
   return Container(
     height: 62,
     decoration: BoxDecoration(

@@ -35,7 +35,6 @@ class DeliveryOptions extends StatefulWidget {
 }
 
 class _DeliveryOptionsState extends State<DeliveryOptions> {
- 
   void _onOptionSelected(String option) {
     setState(() {
       duration = option;

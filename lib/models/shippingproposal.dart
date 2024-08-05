@@ -57,18 +57,17 @@ class ShippingProposal {
 
   factory ShippingProposal.fromJson(Map<String, dynamic> json) {
     return ShippingProposal(
-      departureLocation: json['departure_location'],
-      arrivalLocation: json['arrival_location'],
-      title: json['title'],
-      description: json['description'],
-      receiverData: ReceiverData.fromJson(json['ReceiverData']),
-      deliveryExpress: json['deliveryExpress'],
-      senderData: SenderData.fromJson(json['SenderData']),
-      region: json['Region'],
-      distance: json['Distance'],
-      duration: json['Dure'],
-      amount: ""
-    );
+        departureLocation: json['departure_location'],
+        arrivalLocation: json['arrival_location'],
+        title: json['title'],
+        description: json['description'],
+        receiverData: ReceiverData.fromJson(json['ReceiverData']),
+        deliveryExpress: json['deliveryExpress'],
+        senderData: SenderData.fromJson(json['SenderData']),
+        region: json['Region'],
+        distance: json['Distance'],
+        duration: json['Dure'],
+        amount: "");
   }
 
   Map<String, dynamic> toJson() {

@@ -31,6 +31,10 @@ import 'package:sedo_app/services/numcreate_service.dart';
 
 import 'package:sedo_app/services/destinationinfo_service.dart';
 import 'package:sedo_app/services/shippingproposal_service.dart';
+import 'package:sedo_app/ui/views/home/profile/account_setting/account_setting_view.dart';
+import 'package:sedo_app/ui/views/home/profile/set_notifications/set_notifications_view.dart';
+import 'package:sedo_app/ui/views/home/profile/update_profil/update_profil_view.dart';
+import 'package:sedo_app/ui/views/home/profile/historic_courses/historic_courses_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -47,6 +51,10 @@ import 'package:sedo_app/services/shippingproposal_service.dart';
     MaterialRoute(page: CourierView),
     MaterialRoute(page: NotificationsView),
     MaterialRoute(page: ProfileView),
+    MaterialRoute(page: AccountSettingView),
+    MaterialRoute(page: SetNotificationView),
+    MaterialRoute(page: UpdateProfileView),
+    MaterialRoute(page: HistoricCoursesView),
 // @stacked-route
   ],
   dependencies: [

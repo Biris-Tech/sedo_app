@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sedo_app/models/constants.dart';
 
-Future getRegionFromCoordinates(double latitude, double longitude, String apiKey) async {
+Future getRegionFromCoordinates(
+    double latitude, double longitude, String apiKey) async {
   final url = Uri.parse(
       'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey');
   final response = await http.get(url);
@@ -32,8 +33,8 @@ Future getRegionFromCoordinates(double latitude, double longitude, String apiKey
   }
 }
 
-Future getDistanceBetweenPoints(
-    double startLatitude, double startLongitude, double endLatitude, double endLongitude, String apiKey) async {
+Future getDistanceBetweenPoints(double startLatitude, double startLongitude,
+    double endLatitude, double endLongitude, String apiKey) async {
   final url = Uri.parse(
       'https://maps.googleapis.com/maps/api/distancematrix/json?origins=$startLatitude,$startLongitude&destinations=$endLatitude,$endLongitude&key=$apiKey');
 

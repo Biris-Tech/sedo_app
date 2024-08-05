@@ -29,7 +29,7 @@ class DestinationadressService {
           child: DestinationAdress(
             adress: adress,
             onAdressChanged: (newAdress) {
-              adress = newAdress; 
+              adress = newAdress;
               print('Updated adress: $adress');
             },
             viewModel: viewModel,

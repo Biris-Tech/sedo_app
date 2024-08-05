@@ -20,6 +20,7 @@ import 'package:sedo_app/services/recoveryadress_service.dart';
 import 'package:sedo_app/services/shippingproposal_service.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/app_dialog.dart';
+import 'package:sedo_app/ui/common/kkiapay_component.dart';
 import 'package:sedo_app/ui/common/location_function.dart';
 import 'package:sedo_app/ui/views/home/courier/courier_view.form.dart';
 import 'package:sedo_app/ui/views/home/home_view.dart';
@@ -118,7 +119,7 @@ class CourierViewModel extends BaseViewModel {
         position: LatLng(latitude, longitude),
         infoWindow: InfoWindow(title: name),
         icon: BitmapDescriptor.defaultMarker);
-      moveCamera(marker.position);
+    moveCamera(marker.position);
     markers.add(marker);
     print("markers: $markers");
     if (markers.length == 2) {
@@ -159,12 +160,14 @@ class CourierViewModel extends BaseViewModel {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        googleApiKey,
-        PointLatLng(
-            markers.first.position.latitude, markers.first.position.longitude),
-        PointLatLng(
-            markers.last.position.latitude, markers.last.position.longitude),
-        travelMode: TravelMode.driving);
+        googleApiKey: googleApiKey,
+        request: PolylineRequest(
+            origin: PointLatLng(markers.first.position.latitude,
+                markers.first.position.longitude),
+            destination: PointLatLng(markers.last.position.latitude,
+                markers.last.position.longitude),
+            mode: TravelMode.driving));
+
     if (result.points.isNotEmpty) {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
@@ -221,46 +224,39 @@ class CourierViewModel extends BaseViewModel {
 
   showBillingOptions(BuildContext context) {
     _billingOptionsService.bottomSheetBillingOptions(context, () {
-      Navigator.pop(context);
+      print("deliveryTime: $deliveryTime");
+      _billingOptionsService.bottomSheetCourierFound(
+          context,
+          selectedPaymentMethodName,
+          selectedPaymentMethodIconPath,
+          stringToInt(shipPrice).toString(),
+          stringToInt(3500.toString()).toString(),
+          15, () {
+        Navigator.pop(context);
+        _coursesfinalisationService.bottomSheetDeliveryFinalization(
+            context,
+            stringToInt(shipPrice).toString(),
+            stringToInt(3100.toString()).toString(),
+            10,
+            25,
+            "Steven DOSSOU",
+            "assets/profil.jpeg",
+            "Ordinateur portable",
+            "Un ordinateur portable Dell XPS 13 flambant neuf attend son nouveau propriétaire ! Emballé dans un carton marron de dimensions 30x40x10cm, il ne pèse que 1,5kg. Sonnez à la porte s'il vous plaît et laissez-le devant la porte si personne ne répond. Merci d'avance !",
+            selectedPaymentMethodIconPath,
+            selectedPaymentMethodName,
+            deliveryTime, () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => kkiapay),
+          );
+        });
+      });
     }, () {
       _billingOptionsService.bottomSheetChoosenBillingOptions(
           context,
           () {
             Navigator.pop(context);
-            _billingOptionsService.bottomSheetCourierFound(
-                context,
-                selectedPaymentMethodName,
-                selectedPaymentMethodIconPath,
-                2000,
-                3500,
-                15, () {
-              Navigator.pop(context);
-              _coursesfinalisationService.bottomSheetDeliveryFinalization(
-                  context,
-                  2000,
-                  3100,
-                  10,
-                  25,
-                  "Steven DOSSOU",
-                  "assets/profil.jpeg",
-                  "Ordinateur portable",
-                  "Un ordinateur portable Dell XPS 13 flambant neuf attend son nouveau propriétaire ! Emballé dans un carton marron de dimensions 30x40x10cm, il ne pèse que 1,5kg. Sonnez à la porte s'il vous plaît et laissez-le devant la porte si personne ne répond. Merci d'avance !",
-                  selectedPaymentMethodIconPath,
-                  selectedPaymentMethodName,
-                  deliveryTime, () {
-                showCustomDialog(context,
-                    title: "Super !!",
-                    description:
-                        "Votre course est validee. Le livreur sera la d’ici quelques minutes.",
-                    buttonText: "Retourner a l'ecran d'accueil", onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeView()),
-                  );
-                });
-              });
-            });
           },
           () => setPaymentMethod("Espèces", "assets/money.svg"),
           () {
@@ -316,18 +312,18 @@ class CourierViewModel extends BaseViewModel {
           phone: destinationPhone.substring(4),
         );
         shippingProposalDeliveryExpress = ShippingProposal(
-            departureLocation: recoveryAdress,
-            arrivalLocation: destinationAddress,
-            title: coursesTitle,
-            description: coursesDescription,
-            receiverData: receiverData,
-            deliveryExpress: isDeliveryExpress,
-            senderData: senderData,
-            duration: duration,
-            region: region,
-            distance: distance,
-            amount: shipPrice,
-            );
+          departureLocation: recoveryAdress,
+          arrivalLocation: destinationName,
+          title: coursesTitle,
+          description: coursesDescription,
+          receiverData: receiverData,
+          deliveryExpress: isDeliveryExpress,
+          senderData: senderData,
+          duration: duration,
+          region: region,
+          distance: distance,
+          amount: shipPrice,
+        );
         print("shipping: ${shippingProposalDeliveryExpress!.toJson()}");
         Navigator.pop(context);
       });
@@ -343,16 +339,18 @@ class CourierViewModel extends BaseViewModel {
         phone: destinationPhone.substring(4),
       );
 
+      print("arrival: $destinationAddress");
+
       ShippingProposal shippingProposal = ShippingProposal(
-          departureLocation: recoveryAdress,
-          arrivalLocation: destinationAddress,
-          title: coursesTitle,
-          description: coursesDescription,
-          receiverData: receiverData,
-          senderData: senderData,
-          region: region,
-          distance: distance,
-          amount: shipPrice,
+        departureLocation: recoveryAdress,
+        arrivalLocation: destinationName,
+        title: coursesTitle,
+        description: coursesDescription,
+        receiverData: receiverData,
+        senderData: senderData,
+        region: region,
+        distance: distance,
+        amount: shipPrice,
       );
 
       print("shipping: ${shippingProposal.toJson()}");

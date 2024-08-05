@@ -14,7 +14,7 @@ class SenderData {
       latitude: json['latitude'],
       longitude: json['longitude'],
       phone: json['phone'],
-    ) ;
+    );
   }
 
   Map<String, dynamic> toJson() {

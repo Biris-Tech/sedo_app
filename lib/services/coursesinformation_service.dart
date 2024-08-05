@@ -9,7 +9,8 @@ class CoursesinformationService {
   TextEditingController courseNameController = TextEditingController();
   TextEditingController courseDescriptionController = TextEditingController();
 
-  Future bottomSheetCoursesInfo(BuildContext context, Function()? onDeliveryPressed, Function()? onPressed) {
+  Future bottomSheetCoursesInfo(BuildContext context,
+      Function()? onDeliveryPressed, Function()? onPressed) {
     print(screenWidth(context));
     return showModalBottomSheet(
       backgroundColor: Colors.white,
@@ -23,14 +24,16 @@ class CoursesinformationService {
         return SizedBox(
           height: screenHeight(context) - 100,
           child: isSmallScreen
-              ? SingleChildScrollView(child: buildContent(context, onDeliveryPressed, onPressed))
+              ? SingleChildScrollView(
+                  child: buildContent(context, onDeliveryPressed, onPressed))
               : buildContent(context, onDeliveryPressed, onPressed),
         );
       },
     );
   }
 
-  Widget buildContent(BuildContext context, Function()? onDeliveryPressed, Function()? onPressed) {
+  Widget buildContent(BuildContext context, Function()? onDeliveryPressed,
+      Function()? onPressed) {
     final isSmallScreen = MediaQuery.of(context).size.height < 820;
 
     return Column(
@@ -192,7 +195,7 @@ class CoursesinformationService {
                     ),
                     ButtonNextComponent(
                       height: 40,
-                      width: isNarrow ? constraints.maxWidth / 3  : 240,
+                      width: isNarrow ? constraints.maxWidth / 3 : 240,
                       "continuer",
                       onPressed: onPressed,
                     ),

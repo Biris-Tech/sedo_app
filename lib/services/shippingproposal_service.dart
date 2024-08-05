@@ -15,6 +15,10 @@ class ShippingproposalService {
         await http.post(url, body: jsonEncode(ship.toJson()), headers: headers);
     print("response ${response.body}");
     if (response.statusCode == 201) {
+      final jsonResponse = jsonDecode(response.body);
+
+      shipPrice = jsonResponse['shippingProposal']['amount'];
+
       if (context.mounted) {
         CourierViewModel courierViewModel = CourierViewModel();
         Navigator.pop(context);

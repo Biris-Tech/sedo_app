@@ -1,4 +1,4 @@
-String url = "https://amoeba-native-finch.ngrok-free.app";
+String url = "http://148.113.180.22:8000";
 String loginRoute = "$url/login";
 String registerRoute = "$url/signup";
 String otpRoute = '$url/verifyOtp';
