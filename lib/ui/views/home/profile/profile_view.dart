@@ -18,7 +18,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Colors.white,
       body: Container(
         padding:
             const EdgeInsets.only(top: kToolbarHeight, left: 25.0, right: 25.0),
@@ -82,7 +82,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                     GestureDetector(
                       onTap: () => viewModel.goToUpdateProfileView(),
                       child: SvgPicture.asset(
-                        "assets/Box.svg",
+                        AppImageConstants.blackPen,
                         height: 25,
                         width: 25,
                       ),

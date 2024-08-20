@@ -8,35 +8,31 @@ import '../../../../common/app_colors.dart';
 import '../../../../common/text_components.dart';
 import '../../../../common/ui_helpers.dart';
 
-
-
-class AccountSettingView extends StackedView<AccountSettingViewModel>  {
+class AccountSettingView extends StackedView<AccountSettingViewModel> {
   const AccountSettingView({super.key});
 
   @override
   Widget builder(
-      BuildContext context,
-      AccountSettingViewModel viewModel,
-      Widget? child,
-      ) {
+    BuildContext context,
+    AccountSettingViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.only(top: kToolbarHeight,left: 25.0, right: 25.0),
+        padding:
+            const EdgeInsets.only(top: kToolbarHeight, left: 25.0, right: 25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(
-                bottom: 20
-              ),
+              margin: const EdgeInsets.only(bottom: 20),
               child: Row(
                 children: [
-                   GestureDetector(
-                     onTap: () {
-                       goBack();
-                     },
-                       child: const Icon(Icons.keyboard_backspace)
-                   ),
+                  GestureDetector(
+                      onTap: () {
+                        goBack();
+                      },
+                      child: const Icon(Icons.keyboard_backspace)),
                   horizontalSpaceSmall,
                   TextComponent(
                     "Paramètre du compte",
@@ -48,7 +44,7 @@ class AccountSettingView extends StackedView<AccountSettingViewModel>  {
             ),
             verticalSpaceSmall,
             GestureDetector(
-             onTap: () => viewModel.goToSetNotificationView(),
+              onTap: () => viewModel.goToSetNotificationView(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -73,23 +69,18 @@ class AccountSettingView extends StackedView<AccountSettingViewModel>  {
                 ],
               ),
             ),
-
             verticalSpaceMedium,
-
             GestureDetector(
               onTap: () {
-                final  dialog = DialogResponse(
-
-                );
-                 //InfoAlertDialog(request: dialog, completer: completer)
+                final dialog = DialogResponse();
+                //InfoAlertDialog(request: dialog, completer: completer)
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      SvgPicture.asset(
-                          AppImageConstants.deleteIcon,
+                      SvgPicture.asset(AppImageConstants.deleteIcon,
                           height: 18, width: 24),
                       horizontalSpaceSmall,
                       const TextComponent(
@@ -103,8 +94,6 @@ class AccountSettingView extends StackedView<AccountSettingViewModel>  {
                 ],
               ),
             ),
-
-
           ],
         ),
       ),
@@ -113,7 +102,7 @@ class AccountSettingView extends StackedView<AccountSettingViewModel>  {
 
   @override
   AccountSettingViewModel viewModelBuilder(
-      BuildContext context,
-      ) =>
+    BuildContext context,
+  ) =>
       AccountSettingViewModel();
 }

@@ -89,7 +89,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                   child: Row(
                     children: [
                       Text(
-                        "Mot de passe",
+                        "Mot de passée",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -159,8 +159,8 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                           isfull: viewModel.allInputFull,
                           onPressed: () async {
                             Login user = Login(
-                              email: phoneOrEmailController.text,
-                              password: passwordController.text,
+                              email: phoneOrEmailController.text.trim(),
+                              password: passwordController.text.trim(),
                             );
                             await viewModel.fetchLogin(user);
                           },

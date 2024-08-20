@@ -52,3 +52,25 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/launch.png
+    - assets/time.png
+    - assets/History.svg
+    - assets/HistoryColor.svg
+    - assets/map_round.svg
+    - assets/Map_color.png
+    - assets/Map_w_color.png
+    - assets/cercletime.svg
+    - assets/user_speak.svg
+    - assets/user_speak_color.svg
+    - assets/map_point_wave.svg
+    - assets/arrow-right.svg
+    - assets/profile-img.svg
+    - assets/user.svg
+    - assets/not-bacgkound-delivery.png
+    - assets/left-con.svg
+    - assets/delete-icon.svg
+    - assets/active-icon.png
+    - assets/inactive-icon.png
+    - assets/blackpen.svg
+    - assets/pencil.png
+    - assets/pen2.svg

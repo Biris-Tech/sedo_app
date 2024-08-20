@@ -7,14 +7,17 @@ import 'package:sedo_app/models/api_url.dart';
 import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/models/login.dart';
 import 'package:http/http.dart' as http;
+import 'package:sedo_app/services/tokensession_service.dart';
+import 'package:sedo_app/services/uidstorage_service.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
 import 'package:sedo_app/ui/views/home/home_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class LoginService {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final _navigationService = locator<NavigationService>();
+  final _sessionTokenService = locator<TokensessionService>();
+  final _userIdService = locator<UidstorageService>();
 
   Future<void> login(Login user) async {
     var url = Uri.parse(loginRoute);
@@ -29,10 +32,17 @@ class LoginService {
       final jsonBody = json.decode(response.body);
       token = jsonBody['token'];
       userId = jsonBody['userId'];
+      userName = jsonBody['name'];
+      userSurname = jsonBody['surname'];
+    
       print("res = $userId");
-      await _prefs.then((SharedPreferences prefs) {
-        prefs.setString('userToken', tokenSave);
-      });
+      print("token = $token");
+      _sessionTokenService.storeToken(token);
+      _userIdService.storeUserId(userId);
+      _userIdService.storeUserName(userName);
+      _userIdService.storeUserSurName(userSurname);
+      _userIdService.storeUserEmail(userEmail);
+      _userIdService.storeUserPhone(userPhone);
       _navigationService.replaceWithHomeView();
     } else {
       ScaffoldMessenger(

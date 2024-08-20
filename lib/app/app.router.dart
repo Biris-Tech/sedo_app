@@ -7,26 +7,26 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i18;
 import 'package:flutter/material.dart';
-import 'package:sedo_app/ui/views/home/profile/account_setting/account_setting_view.dart'
-    as _i14;
-import 'package:sedo_app/ui/views/home/profile/historic_courses/historic_courses_view.dart'
-    as _i17;
 import 'package:sedo_app/ui/views/home/courier/courier_view.dart' as _i11;
 import 'package:sedo_app/ui/views/home/home_view.dart' as _i2;
 import 'package:sedo_app/ui/views/home/notifications/notifications_view.dart'
     as _i12;
 import 'package:sedo_app/ui/views/home/place/place_view.dart' as _i10;
+import 'package:sedo_app/ui/views/home/profile/account_setting/account_setting_view.dart'
+    as _i14;
+import 'package:sedo_app/ui/views/home/profile/historic_courses/historic_courses_view.dart'
+    as _i17;
 import 'package:sedo_app/ui/views/home/profile/profile_view.dart' as _i13;
+import 'package:sedo_app/ui/views/home/profile/set_notifications/set_notifications_view.dart'
+    as _i15;
+import 'package:sedo_app/ui/views/home/profile/update_profil/update_profil_view.dart'
+    as _i16;
 import 'package:sedo_app/ui/views/home/reception/reception_view.dart' as _i9;
 import 'package:sedo_app/ui/views/login/login_view.dart' as _i4;
 import 'package:sedo_app/ui/views/otp/otp_view.dart' as _i7;
 import 'package:sedo_app/ui/views/register/password/password_view.dart' as _i8;
 import 'package:sedo_app/ui/views/register/register_view.dart' as _i5;
-import 'package:sedo_app/ui/views/home/profile/set_notifications/set_notifications_view.dart'
-    as _i15;
 import 'package:sedo_app/ui/views/startup/startup_view.dart' as _i3;
-import 'package:sedo_app/ui/views/home/profile/update_profil/update_profil_view.dart'
-    as _i16;
 import 'package:sedo_app/ui/views/welcome/welcome_view.dart' as _i6;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i19;
@@ -58,9 +58,9 @@ class Routes {
 
   static const accountSettingView = '/account-setting-view';
 
-  static const setNotificationsView = '/set-notifications-view';
+  static const setNotificationView = '/set-notification-view';
 
-  static const updateProfilView = '/update-profil-view';
+  static const updateProfileView = '/update-profile-view';
 
   static const historicCoursesView = '/historic-courses-view';
 
@@ -78,8 +78,8 @@ class Routes {
     notificationsView,
     profileView,
     accountSettingView,
-    setNotificationsView,
-    updateProfilView,
+    setNotificationView,
+    updateProfileView,
     historicCoursesView,
   };
 }
@@ -139,11 +139,11 @@ class StackedRouter extends _i1.RouterBase {
       page: _i14.AccountSettingView,
     ),
     _i1.RouteDef(
-      Routes.setNotificationsView,
+      Routes.setNotificationView,
       page: _i15.SetNotificationView,
     ),
     _i1.RouteDef(
-      Routes.updateProfilView,
+      Routes.updateProfileView,
       page: _i16.UpdateProfileView,
     ),
     _i1.RouteDef(
@@ -441,28 +441,28 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToSetNotificationsView([
+  Future<dynamic> navigateToSetNotificationView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.setNotificationsView,
+    return navigateTo<dynamic>(Routes.setNotificationView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> navigateToUpdateProfilView([
+  Future<dynamic> navigateToUpdateProfileView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.updateProfilView,
+    return navigateTo<dynamic>(Routes.updateProfileView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -665,28 +665,28 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithSetNotificationsView([
+  Future<dynamic> replaceWithSetNotificationView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.setNotificationsView,
+    return replaceWith<dynamic>(Routes.setNotificationView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> replaceWithUpdateProfilView([
+  Future<dynamic> replaceWithUpdateProfileView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.updateProfilView,
+    return replaceWith<dynamic>(Routes.updateProfileView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

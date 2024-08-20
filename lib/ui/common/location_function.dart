@@ -35,6 +35,8 @@ Future getRegionFromCoordinates(
 
 Future getDistanceBetweenPoints(double startLatitude, double startLongitude,
     double endLatitude, double endLongitude, String apiKey) async {
+
+      print('start latitude: $startLatitude, start longitude: $startLongitude, end latitude: $endLatitude, end longitude: $endLongitude');
   final url = Uri.parse(
       'https://maps.googleapis.com/maps/api/distancematrix/json?origins=$startLatitude,$startLongitude&destinations=$endLatitude,$endLongitude&key=$apiKey');
 
@@ -48,7 +50,9 @@ Future getDistanceBetweenPoints(double startLatitude, double startLongitude,
         final distanceInMeters = elements['distance']['value'];
         final distanceInKilometers = distanceInMeters / 1000;
         distance = distanceInKilometers;
+        shipPrice = (distance * 100).toString();
         print('Distance: $distance km');
+        print('ship price: $shipPrice');
       } else {
         throw Exception('Error: ${elements['status']}');
       }

@@ -184,9 +184,13 @@ class _DestinationAdressState extends State<DestinationAdress> {
                           getPlaceId(widget.adress);
                           Future.delayed(const Duration(seconds: 3), () {
                             Navigator.pop(context);
-                            destinationAdressInfo
-                                .bottomSheetDestinationAdressInfo(
-                                    context, widget.viewModel, widget.onTap);
+                            !onTapMap
+                                ? destinationAdressInfo
+                                    .bottomSheetDestinationAdressInfo(
+                                        context, widget.viewModel, widget.onTap)
+                                : destinationAdressInfo
+                                    .bottomSheetDestination2AdressInfo(context,
+                                        widget.viewModel, widget.onTap);
                             print("adress $destinationName");
                           });
                         },

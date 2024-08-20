@@ -302,9 +302,9 @@ class BillingoptionsService {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Row(
                             children: [
-                              const SizedBox(
-                                width: 16,
-                              ),
+                              // const SizedBox(
+                              //   width: 12,
+                              // ),
                               SvgPicture.asset(selectedPayementIconPath,
                                   height: 22, width: 22),
                               const SizedBox(

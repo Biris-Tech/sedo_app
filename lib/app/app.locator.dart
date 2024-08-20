@@ -27,6 +27,8 @@ import '../services/otp_service.dart';
 import '../services/recoveryadress_service.dart';
 import '../services/register_service.dart';
 import '../services/shippingproposal_service.dart';
+import '../services/tokensession_service.dart';
+import '../services/uidstorage_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -58,4 +60,6 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => NumcreateService());
   locator.registerLazySingleton(() => DestinationinfoService());
   locator.registerLazySingleton(() => ShippingproposalService());
+  locator.registerLazySingleton(() => TokensessionService());
+  locator.registerLazySingleton(() => UidstorageService());
 }

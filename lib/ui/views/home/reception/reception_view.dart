@@ -25,7 +25,7 @@ class ReceptionView extends StackedView<ReceptionViewModel> {
                   target: currentLocation,
                   zoom: 13,
                 ),
-                mapType: MapType.satellite,
+                mapType: MapType.normal,
                 markers: {
                   const Marker(
                       markerId: MarkerId('currentLocation'),

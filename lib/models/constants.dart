@@ -35,3 +35,4 @@ String duration = "";
 String region = "";
 double distance = 0;
 String shipPrice = "";
+bool onTapMap = false;

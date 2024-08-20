@@ -18,6 +18,8 @@ import 'package:sedo_app/services/numlist_service.dart';
 import 'package:sedo_app/services/numcreate_service.dart';
 import 'package:sedo_app/services/destinationinfo_service.dart';
 import 'package:sedo_app/services/shippingproposal_service.dart';
+import 'package:sedo_app/services/tokensession_service.dart';
+import 'package:sedo_app/services/uidstorage_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -46,6 +48,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<NotifiationmodelService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DestinationinfoService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<ShippingproposalService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<TokensessionService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<UidstorageService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -69,6 +73,8 @@ void registerServices() {
   getAndRegisterNotifiationmodelService();
   getAndRegisterDestinationinfoService();
   getAndRegisterShippingproposalService();
+  getAndRegisterTokensessionService();
+  getAndRegisterUidstorageService();
 // @stacked-mock-register
 }
 
@@ -238,6 +244,20 @@ MockShippingproposalService getAndRegisterShippingproposalService() {
   _removeRegistrationIfExists<ShippingproposalService>();
   final service = MockShippingproposalService();
   locator.registerSingleton<ShippingproposalService>(service);
+  return service;
+}
+
+MockTokensessionService getAndRegisterTokensessionService() {
+  _removeRegistrationIfExists<TokensessionService>();
+  final service = MockTokensessionService();
+  locator.registerSingleton<TokensessionService>(service);
+  return service;
+}
+
+MockUidstorageService getAndRegisterUidstorageService() {
+  _removeRegistrationIfExists<UidstorageService>();
+  final service = MockUidstorageService();
+  locator.registerSingleton<UidstorageService>(service);
   return service;
 }
 // @stacked-mock-create

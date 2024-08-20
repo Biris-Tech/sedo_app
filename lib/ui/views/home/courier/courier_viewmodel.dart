@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
@@ -12,6 +13,7 @@ import 'package:sedo_app/services/cardlist_service.dart';
 import 'package:sedo_app/services/coursesinformation_service.dart';
 import 'package:sedo_app/services/deliveryfinalization_service.dart';
 import 'package:sedo_app/services/destinationadress_service.dart';
+import 'package:sedo_app/services/destinationinfo_service.dart';
 import 'package:sedo_app/services/expressdelivery_service.dart';
 import 'package:sedo_app/services/location_service.dart';
 import 'package:sedo_app/services/numcreate_service.dart';
@@ -27,13 +29,14 @@ import 'package:sedo_app/ui/views/home/home_view.dart';
 import 'package:stacked/stacked.dart';
 
 class CourierViewModel extends BaseViewModel {
+
   String destinationAddress = "";
   String recoveryAdress = "Cotonou";
   String destinationService = "Akpakpa";
   String markerEnd = "assets/MapEnd.png";
   String markerStart = "assets/MapStart.png";
-  String selectedPaymentMethodName = "";
-  String selectedPaymentMethodIconPath = "";
+  String selectedPaymentMethodName = "Espèces";
+  String selectedPaymentMethodIconPath = "assets/money.svg";
   String _recoveryName = '';
   String _destinationName = '';
   String get recoveryName => _recoveryName;
@@ -58,11 +61,14 @@ class CourierViewModel extends BaseViewModel {
   final _numberCreateService = locator<NumcreateService>();
   final _numberListService = locator<NumlistService>();
   final _shippingCreateService = locator<ShippingproposalService>();
+  final _destinationAdressInfo = locator<DestinationinfoService>();
   ShippingProposal? shippingProposalDeliveryExpress;
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
   int mapTap = 0;
+  LatLng? _startLocation;
+  LatLng? _endLocation;
 
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
@@ -76,7 +82,7 @@ class CourierViewModel extends BaseViewModel {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: position,
-          zoom: 15.0, // Adjust zoom level as needed
+          zoom: 15.0,
         ),
       ),
     );
@@ -114,6 +120,7 @@ class CourierViewModel extends BaseViewModel {
   }
 
   void setRecoveryLocation(String name, double latitude, double longitude) {
+    //markers.clear();
     final marker = Marker(
         markerId: MarkerId(name),
         position: LatLng(latitude, longitude),
@@ -122,9 +129,6 @@ class CourierViewModel extends BaseViewModel {
     moveCamera(marker.position);
     markers.add(marker);
     print("markers: $markers");
-    if (markers.length == 2) {
-      fetchAndCreatePolyline();
-    }
     rebuildUi();
   }
 
@@ -199,17 +203,79 @@ class CourierViewModel extends BaseViewModel {
     );
   }
 
+  void onMapTap(LatLng position) async {
+    onTapMap = true;
+    print("you tap on themap");
+    print("onTapMap $onTapMap");
+    if (markers.length < 2) {
+      final markerId = MarkerId(DateTime.now().toString());
+      Marker marker = Marker(
+        markerId: markerId,
+        position: position,
+        infoWindow: InfoWindow(title: "New Location"),
+        draggable: true,
+        icon: markerIcon,
+        onDragEnd: (LatLng newPosition) {
+          updateMarkerPosition(markerId.value, newPosition);
+        },
+      );
+
+      markers.add(marker);
+
+      if (markers.length == 2) {
+        fetchAndCreatePolyline();
+      }
+
+      if (markers.length == 1) {
+        _startLocation = position;
+        print("startLocation: $_startLocation");
+      } else {
+        _endLocation = position;
+        print("endLocation: $_endLocation");
+      }
+
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+        String locationName = "${place.name}, ${place.country}";
+        if (markers.length == 1) {
+          setRecoveryName(locationName);
+          setRecoveryLocation(locationName, _startLocation!.latitude,
+              _startLocation!.longitude);
+        } else if (markers.length == 2) {
+          setDestinationName(locationName);
+          setDestinationLocation(
+              locationName, _endLocation!.latitude, _endLocation!.longitude);
+        }
+      }
+
+      rebuildUi();
+    }
+  }
+
   void setPaymentMethod(String name, String iconPath) {
     selectedPaymentMethodName = name;
     selectedPaymentMethodIconPath = iconPath;
     rebuildUi();
   }
 
-  void updateMarkerPosition(String markerId, LatLng newPosition) {
+  void updateMarkerPosition(String markerId, LatLng newPosition) async {
     Marker marker =
         markers.firstWhere((marker) => marker.markerId.value == markerId);
     markers.remove(marker);
     markers.add(marker.copyWith(positionParam: newPosition));
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        newPosition.latitude, newPosition.longitude);
+    if (placemarks.isNotEmpty) {
+      Placemark place = placemarks[0];
+      String locationName = "${place.locality}, ${place.country}";
+      if (markers.length == 1) {
+        setRecoveryName(locationName);
+      } else {
+        setDestinationName(locationName);
+      }
+    }
     rebuildUi();
   }
 
@@ -232,7 +298,7 @@ class CourierViewModel extends BaseViewModel {
           stringToInt(shipPrice).toString(),
           stringToInt(3500.toString()).toString(),
           15, () {
-        Navigator.pop(context);
+       // Navigator.pop(context);
         _coursesfinalisationService.bottomSheetDeliveryFinalization(
             context,
             stringToInt(shipPrice).toString(),
@@ -320,7 +386,6 @@ class CourierViewModel extends BaseViewModel {
           deliveryExpress: isDeliveryExpress,
           senderData: senderData,
           duration: duration,
-          region: region,
           distance: distance,
           amount: shipPrice,
         );
@@ -348,7 +413,6 @@ class CourierViewModel extends BaseViewModel {
         description: coursesDescription,
         receiverData: receiverData,
         senderData: senderData,
-        region: region,
         distance: distance,
         amount: shipPrice,
       );
@@ -366,16 +430,40 @@ class CourierViewModel extends BaseViewModel {
     _destinationService.bottomSheetDestinationAdress(
         context, destinationAddress, this, () async {
       Navigator.pop(context);
-      await getRegionFromCoordinates(
-          destinationLatitude, destinationLongitude, googleApiKey);
       await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
           destinationLatitude, destinationLongitude, googleApiKey);
       goToCoursesInfoService(context);
     });
   }
 
+  goToDestinationAdressInfo(BuildContext context) {
+    _destinationAdressInfo.bottomSheetDestinationAdressInfo(context, this,
+        () async {
+      Navigator.pop(context);
+      _destinationAdressInfo.closeBottomSheet();
+      // await getRegionFromCoordinates(
+      //     destinationLatitude, destinationLongitude, googleApiKey);
+      // await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
+      //     destinationLatitude, destinationLongitude, googleApiKey);
+
+      goToCoursesInfoService(context);
+    });
+  }
+
   void checkNumber() {
     if (RecoverynumValueKey.isNotEmpty) allInputFull == true;
+    rebuildUi();
+  }
+
+  CourierViewModel() {
+    print("model ready");
+    _locationService.getLocation();
+    print("current: $currentLocation");
+    setRecoveryName("Ma position actuelle");
+    recoveryLatitude = currentLocation.latitude;
+    recoveryLongitude = currentLocation.longitude;
+    setRecoveryLocation(
+        recoveryName, recoveryLatitude, recoveryLongitude);
     rebuildUi();
   }
 }

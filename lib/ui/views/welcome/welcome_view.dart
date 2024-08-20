@@ -48,7 +48,7 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
                   verticalSpaceLarge,
                   const Padding(
                     padding: EdgeInsets.only(left: 16),
-                    child: Row(
+                    child: Row( 
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextComponent(

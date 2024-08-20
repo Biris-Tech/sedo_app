@@ -37,6 +37,7 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                 zoom: 13,
               ),
               mapType: MapType.normal,
+              // onTap: viewModel.onMapTap,
               markers: viewModel.markers,
               polylines: viewModel.polylines,
             ),
@@ -175,7 +176,10 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                                 // print(" isDone: ${viewModel.isDone}");
                                 recoveryPhone = recoverynumController.text;
                                 print("recoveryPhone: $recoveryPhone");
-                                viewModel.goToDestinationService(context);
+                                !onTapMap
+                                    ? viewModel.goToDestinationService(context)
+                                    : viewModel
+                                        .goToDestinationAdressInfo(context);
                               }),
                             ],
                           ),

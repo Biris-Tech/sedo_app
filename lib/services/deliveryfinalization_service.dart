@@ -71,59 +71,59 @@ class DeliveryfinalizationService {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: deliveryDurationCard(deliveryRemainingTimes)),
                     const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        children: [
-                          TextComponent(
-                            "info sur la course",
-                            fontweight: FontWeight.w600,
-                            fontsize: 16,
-                            textcolor: kcDarkGreyColor.withOpacity(0.6),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        children: [
-                          TextComponent(
-                            product,
-                            fontweight: FontWeight.w700,
-                            fontsize: 14,
-                            textcolor: kcDarkGreyColor,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: TextComponent(
-                        productDescription,
-                        fontweight: FontWeight.w400,
-                        fontsize: 12,
-                        textcolor: kcDarkGreyColor,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(),
-                          ButtonTrueComponent(
-                            "Modifier",
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 16),
+                    //   child: Row(
+                    //     children: [
+                    //       TextComponent(
+                    //         "info sur la course",
+                    //         fontweight: FontWeight.w600,
+                    //         fontsize: 16,
+                    //         textcolor: kcDarkGreyColor.withOpacity(0.6),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 12),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 16),
+                    //   child: Row(
+                    //     children: [
+                    //       TextComponent(
+                    //         product,
+                    //         fontweight: FontWeight.w700,
+                    //         fontsize: 14,
+                    //         textcolor: kcDarkGreyColor,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 4),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 16),
+                    //   child: TextComponent(
+                    //     productDescription,
+                    //     fontweight: FontWeight.w400,
+                    //     fontsize: 12,
+                    //     textcolor: kcDarkGreyColor,
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 12),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       const SizedBox(),
+                    //       ButtonTrueComponent(
+                    //         "Modifier",
+                    //         onPressed: () {
+                    //           Navigator.pop(context);
+                    //         },
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     const SizedBox(height: 28),
                     Padding(
                         padding: const EdgeInsets.only(left: 16, right: 28),
