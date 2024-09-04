@@ -19,6 +19,7 @@ class DestinationadressService {
       CourierViewModel viewModel, Function()? onTap) {
     return showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
@@ -128,82 +129,94 @@ class _DestinationAdressState extends State<DestinationAdress> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: screenHeight(context) - 100,
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: Row(
-              children: [
-                FaIcon(
-                  Icons.location_on_sharp,
-                  color: Color(0xFF8C034E),
-                ),
-                SizedBox(width: 3),
-                TextComponent(
-                  "Adresse de destination",
-                  fontweight: FontWeight.w700,
-                  fontsize: 18,
-                ),
-              ],
+      height: screenHeight(context) - 290,
+      child: Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Row(
+                children: [
+                  FaIcon(
+                    Icons.location_on_sharp,
+                    color: Color(0xFF8C034E),
+                  ),
+                  SizedBox(width: 3),
+                  TextComponent(
+                    "Adresse de destination",
+                    fontweight: FontWeight.w700,
+                    fontsize: 18,
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 24),
-            child: Row(
-              children: [
-                TextComponent(
-                  "Lieu",
-                  fontweight: FontWeight.w500,
-                  fontsize: 14,
-                ),
-              ],
+            const Padding(
+              padding: EdgeInsets.only(left: 24),
+              child: Row(
+                children: [
+                  TextComponent(
+                    "Lieu",
+                    fontweight: FontWeight.w500,
+                    fontsize: 14,
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextInputField(
-              height: 40,
-              controller: _adressController,
-            ),
-          ),
-          Expanded(
-            child: Padding(
+            const SizedBox(height: 8),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextInputField(
+                height: 40,
+                controller: _adressController,
+                hintText: "Entrez une adresse",
+              ),
+            ),
+            Expanded(
               child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: placeList.length,
                 itemBuilder: (context, index) {
+                  final place = placeList[index];
                   return Column(
                     children: [
                       InkWell(
                         onTap: () async {
                           final destinationAdressInfo =
                               locator<DestinationinfoService>();
-                          placeId = placeList[index]['place_id'];
+                          placeId = place['place_id'];
                           getPlaceId(widget.adress);
-                          Future.delayed(const Duration(seconds: 3), () {
-                            Navigator.pop(context);
-                            !onTapMap
-                                ? destinationAdressInfo
-                                    .bottomSheetDestinationAdressInfo(
-                                        context, widget.viewModel, widget.onTap)
-                                : destinationAdressInfo
-                                    .bottomSheetDestination2AdressInfo(context,
-                                        widget.viewModel, widget.onTap);
-                            print("adress $destinationName");
-                          });
+                          if (context.mounted) {
+                            Future.delayed(const Duration(seconds: 3), () {
+                              if (context.mounted) {
+                                Navigator.pop(context);
+                              }
+                              !onTapMap
+                                  ? destinationAdressInfo
+                                      .bottomSheetDestinationAdressInfo(
+                                          context,
+                                          widget.viewModel,
+                                          widget.onTap)
+                                  : destinationAdressInfo
+                                      .bottomSheetDestination2AdressInfo(
+                                          context,
+                                          widget.viewModel,
+                                          widget.onTap);
+                              print("adress $destinationName");
+                            });
+                          }
                         },
                         child: ListTile(
                           leading: SvgPicture.asset("assets/mark.svg"),
                           title: TextComponent(
-                            placeList[index]['description'],
+                            place['description'],
                             fontsize: 14,
                             fontweight: FontWeight.w400,
                           ),
                         ),
                       ),
-                      if (index < placeList.length - 1)
+                      if (place != placeList.last)
                         Divider(
                           height: 1,
                           thickness: 1,
@@ -216,8 +229,8 @@ class _DestinationAdressState extends State<DestinationAdress> {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

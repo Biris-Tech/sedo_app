@@ -1,5 +1,6 @@
 import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
+import 'package:sedo_app/services/tokensession_service.dart';
 import 'package:sedo_app/services/uidstorage_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,7 +9,7 @@ import 'package:sedo_app/app/app.router.dart';
 class ProfileViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final userIdService = locator<UidstorageService>();
-
+  final userTokenService = locator<TokensessionService>();
   String accountCreatedAt = "Créé il y 3 mois";
   String _phone = "57072691";
   String _email = "otisdgn@gmail.com";
@@ -32,6 +33,11 @@ class ProfileViewModel extends BaseViewModel {
     _phone = await userIdService.getUserPhoneNumber() ?? userPhone;
     _email = await userIdService.getUserEmail() ?? userEmail;
     notifyListeners();
+  }
+
+  disconectUser() {
+    userTokenService.deleteToken();
+    _navigationService.navigateToLoginView();
   }
 
   void goToCourseHistoricView() =>

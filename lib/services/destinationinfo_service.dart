@@ -19,8 +19,8 @@ class DestinationinfoService with $CourierView {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       isDismissible:
-          true, // Prevents dismissing the bottom sheet by tapping outside
-      barrierColor: Colors.transparent, // Barrier color for outside area
+          true, 
+      barrierColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
       ),
@@ -28,7 +28,7 @@ class DestinationinfoService with $CourierView {
       builder: (context) {
         final isSmallScreen = MediaQuery.of(context).size.height <= 850;
         return WillPopScope(
-          onWillPop: () async => true, // Prevents dismissing with back button
+          onWillPop: () async => true,
           child: SizedBox(
             height: screenHeight(context) - 435,
             child: isSmallScreen
@@ -91,7 +91,7 @@ class DestinationinfoService with $CourierView {
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: const Color(0xFFB7B7B7)),
             ),
-            child: TextComponent(model.destinationName),
+            child: TextComponent(model.destinationName ?? "Akpakpa",),
           ),
         ),
         const SizedBox(height: 16),
@@ -120,6 +120,7 @@ class DestinationinfoService with $CourierView {
               },
               decoration: InputDecoration(
                 labelText: '90100100',
+                contentPadding: const EdgeInsets.all(8),
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(color: Color(0xFFB7B7B7)),
                   borderRadius: BorderRadius.circular(24),
@@ -248,7 +249,7 @@ class DestinationinfoService with $CourierView {
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: const Color(0xFFB7B7B7)),
             ),
-            child: TextComponent(model.destinationName),
+            child: TextComponent(model.destinationName ?? "Akpakpa"),
           ),
         ),
         const SizedBox(height: 16),

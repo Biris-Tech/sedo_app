@@ -152,20 +152,25 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
               ),
               verticalSpaceMedium,
-              const Row(
-                children: [
-                  Icon(
-                    Icons.logout,
-                    color: Color(0xFFEA1C24),
-                  ),
-                  horizontalSpaceSmall,
-                  TextComponent(
-                    "Déconnexion",
-                    fontsize: 14,
-                    fontweight: FontWeight.w400,
-                    textcolor: Color(0xFFEA1C24),
-                  )
-                ],
+              InkWell(
+                onTap: () {
+                  viewModel.disconectUser();
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.logout,
+                      color: Color(0xFFEA1C24),
+                    ),
+                    horizontalSpaceSmall,
+                    TextComponent(
+                      "Déconnexion",
+                      fontsize: 14,
+                      fontweight: FontWeight.w400,
+                      textcolor: Color(0xFFEA1C24),
+                    )
+                  ],
+                ),
               ),
               verticalSpaceLarge,
             ],

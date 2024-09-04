@@ -57,5 +57,5 @@ class MapWidget extends StackedHookView<ReceptionViewModel> {
   }
 
   @override
-  bool get reactive => ; 
+  bool get reactive => true; 
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sedo_app/app/app.dialogs.dart';
 import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/app/app.router.dart';
 import 'package:sedo_app/models/api_url.dart';
@@ -15,8 +14,7 @@ import 'package:stacked_services/stacked_services.dart' hide SnackPosition;
 class RegisterService {
   final _otpService = locator<OtpService>();
   final _navigationService = locator<NavigationService>();
-  final _dialogService = locator<DialogService>();
-
+  
   Future<void> fectchUser(Register user, Otp otp, bool isDone) async {
     isDone = true;
     try {

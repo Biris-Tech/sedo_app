@@ -111,8 +111,10 @@ class _TextInputFieldState extends State<TextInputField> {
               // labelStyle: const TextStyle(color: primColor, fontWeight: FontWeight.w500),
               floatingLabelBehavior: FloatingLabelBehavior.always,
               hintText: widget.hintText ?? (widget.enabled ? null : 'N/A'),
-              hintStyle: const TextStyle(
-                  //  color: inputBorderColor.withOpacity(0.55),
+              hintStyle:  TextStyle(
+                  color: kcInputBordersColors.withOpacity(0.55),
+      
+                  fontSize: 12
                   ),
               suffixIcon: widget.suffixIcon,
               contentPadding:

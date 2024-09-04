@@ -29,7 +29,6 @@ import 'package:sedo_app/ui/views/home/home_view.dart';
 import 'package:stacked/stacked.dart';
 
 class CourierViewModel extends BaseViewModel {
-
   String destinationAddress = "";
   String recoveryAdress = "Cotonou";
   String destinationService = "Akpakpa";
@@ -40,7 +39,7 @@ class CourierViewModel extends BaseViewModel {
   String _recoveryName = '';
   String _destinationName = '';
   String get recoveryName => _recoveryName;
-  String get destinationName => _destinationName;
+  String? get destinationName => _destinationName;
   final bool _allInputFull = true;
   bool isDone = false;
   bool isContainerVisible = true;
@@ -78,14 +77,14 @@ class CourierViewModel extends BaseViewModel {
   }
 
   void moveCamera(LatLng position) {
-    mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: position,
-          zoom: 15.0,
-        ),
-      ),
-    );
+    // mapController.animateCamera(
+    //   CameraUpdate.newCameraPosition(
+    //     CameraPosition(
+    //       target: position,
+    //       zoom: 15.0,
+    //     ),
+    //   ),
+    // );
   }
 
   void onTapIncrement() {
@@ -126,7 +125,9 @@ class CourierViewModel extends BaseViewModel {
         position: LatLng(latitude, longitude),
         infoWindow: InfoWindow(title: name),
         icon: BitmapDescriptor.defaultMarker);
-    moveCamera(marker.position);
+    if (mapController != null) {
+      moveCamera(marker.position);
+    }
     markers.add(marker);
     print("markers: $markers");
     rebuildUi();
@@ -298,7 +299,7 @@ class CourierViewModel extends BaseViewModel {
           stringToInt(shipPrice).toString(),
           stringToInt(3500.toString()).toString(),
           15, () {
-       // Navigator.pop(context);
+        // Navigator.pop(context);
         _coursesfinalisationService.bottomSheetDeliveryFinalization(
             context,
             stringToInt(shipPrice).toString(),
@@ -364,34 +365,6 @@ class CourierViewModel extends BaseViewModel {
   goToCoursesInfoService(BuildContext context) {
     _coursesInfoSrvice.bottomSheetCoursesInfo(context, () async {
       isDeliveryExpress = true;
-      _expressDeliveryService.bottomSheetExpressDelivery(context, () async {
-        print("dfezffds");
-        isDeliveryExpress = true;
-        ReceiverData receiverData = ReceiverData(
-          latitude: recoveryLatitude,
-          longitude: recoveryLongitude,
-          phone: recoveryPhone,
-        );
-        SenderData senderData = SenderData(
-          latitude: destinationLatitude,
-          longitude: destinationLongitude,
-          phone: destinationPhone.substring(4),
-        );
-        shippingProposalDeliveryExpress = ShippingProposal(
-          departureLocation: recoveryAdress,
-          arrivalLocation: destinationName,
-          title: coursesTitle,
-          description: coursesDescription,
-          receiverData: receiverData,
-          deliveryExpress: isDeliveryExpress,
-          senderData: senderData,
-          duration: duration,
-          distance: distance,
-          amount: shipPrice,
-        );
-        print("shipping: ${shippingProposalDeliveryExpress!.toJson()}");
-        Navigator.pop(context);
-      });
     }, () async {
       ReceiverData receiverData = ReceiverData(
         latitude: recoveryLatitude,
@@ -401,14 +374,14 @@ class CourierViewModel extends BaseViewModel {
       SenderData senderData = SenderData(
         latitude: destinationLatitude,
         longitude: destinationLongitude,
-        phone: destinationPhone.substring(4),
+        phone: destinationPhone,
       );
 
       print("arrival: $destinationAddress");
 
       ShippingProposal shippingProposal = ShippingProposal(
         departureLocation: recoveryAdress,
-        arrivalLocation: destinationName,
+        arrivalLocation: destinationName!,
         title: coursesTitle,
         description: coursesDescription,
         receiverData: receiverData,
@@ -427,9 +400,9 @@ class CourierViewModel extends BaseViewModel {
   }
 
   goToDestinationService(BuildContext context) {
+    print("ededed");
     _destinationService.bottomSheetDestinationAdress(
         context, destinationAddress, this, () async {
-      Navigator.pop(context);
       await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
           destinationLatitude, destinationLongitude, googleApiKey);
       goToCoursesInfoService(context);
@@ -462,8 +435,7 @@ class CourierViewModel extends BaseViewModel {
     setRecoveryName("Ma position actuelle");
     recoveryLatitude = currentLocation.latitude;
     recoveryLongitude = currentLocation.longitude;
-    setRecoveryLocation(
-        recoveryName, recoveryLatitude, recoveryLongitude);
+    setRecoveryLocation(recoveryName, recoveryLatitude, recoveryLongitude);
     rebuildUi();
   }
 }

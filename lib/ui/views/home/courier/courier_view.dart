@@ -136,10 +136,14 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                               onChanged: (value) => viewModel.checkNumber,
                               decoration: InputDecoration(
                                 labelText: '90100100',
+                                contentPadding: const EdgeInsets.all(8),
                                 border: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                         color: Color(0xFFB7B7B7)),
                                     borderRadius: BorderRadius.circular(24)),
+                              ),
+                              style: const TextStyle(
+                                fontSize: 14
                               ),
                               initialCountryCode: 'BJ',
                             ),
