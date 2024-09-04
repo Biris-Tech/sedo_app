@@ -64,7 +64,7 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
                           textcolor: kcPrimaryColor,
                         ),
                         TextComponent(
-                          ",le",
+                          ", le",
                           fontsize: 24,
                           fontweight: FontWeight.bold,
                           textcolor: kcPrimaryColorDark,
@@ -93,8 +93,7 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
                       children: [
                         const SizedBox(),
                         SizedBox(
-                          width: 150,
-                          height: 40,
+  
                           child: ButtonComponent(
                             height: 24,
                             "Continuer",
@@ -180,7 +179,7 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
                     children: [
                       const SizedBox(),
                       SizedBox(
-                        width: 150,
+                       
                         height: 40,
                         child: ButtonComponent(
                           height: 24,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sedo_app/models/constants.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/maps_card_component.dart';
 import 'package:stacked/stacked.dart';
-
 import 'reception_viewmodel.dart';
+
 
 class ReceptionView extends StackedView<ReceptionViewModel> {
   const ReceptionView({super.key});
@@ -16,28 +15,22 @@ class ReceptionView extends StackedView<ReceptionViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          const MapWidget(), // Utilisation de la carte avec StackedHookView
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: viewModel.moveCamera,
         backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            CustomGoogleMap(
-                onMapCreated: viewModel.onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: currentLocation,
-                  zoom: 13,
-                ),
-                mapType: MapType.normal,
-                markers: {
-                  const Marker(
-                      markerId: MarkerId('currentLocation'),
-                      icon: BitmapDescriptor.defaultMarker)
-                })
-          ],
-        ));
+        child: Icon(Icons.my_location_outlined, color: kcPrimaryColor,),
+      ),
+    );
   }
 
   @override
-  ReceptionViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      ReceptionViewModel();
+  bool get reactive => false; // Pas de réactivité globale
+  @override
+  ReceptionViewModel viewModelBuilder(BuildContext context) => ReceptionViewModel();
 }

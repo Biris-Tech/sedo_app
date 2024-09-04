@@ -82,6 +82,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                     height: 40,
                     controller: phoneOrEmailController,
                     onChanged: (value) => viewModel.checkAllInputFull(),
+                    keyboardType: TextInputType.emailAddress,
                   ),
                 ),
                 const Padding(

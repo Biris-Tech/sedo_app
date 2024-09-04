@@ -1,8 +1,9 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sedo_app/models/constants.dart';
+import 'package:stacked/stacked.dart';
 
-class LocationService {
+class LocationService with ListenableServiceMixin {
   Future<void> getLocation() async {
     Location location = Location();
     bool serviceEnabled;

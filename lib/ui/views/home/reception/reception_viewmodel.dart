@@ -4,13 +4,30 @@ import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/services/location_service.dart';
 import 'package:stacked/stacked.dart';
 
-class ReceptionViewModel extends BaseViewModel {
+class ReceptionViewModel extends ReactiveViewModel {
   final _locationService = locator<LocationService>();
 
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    print("locate1 $currentLocation");
-    await _locationService.getLocation();
-    print("locate $currentLocation");
+    await _fetchLocation();
   }
+
+  Future<void> _fetchLocation() async {
+    await _locationService.getLocation();
+    notifyListeners();
+  }
+
+  void moveCamera() {
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: currentLocation,
+          zoom: 15.0,
+        ),
+      ),
+    );
+  }
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_locationService ];
 }

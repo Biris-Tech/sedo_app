@@ -26,7 +26,6 @@ class PasswordView extends StackedView<PasswordViewModel> with $PasswordView {
     Widget? child,
   ) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: viewModel.isBusy
           ? const Center(
@@ -34,161 +33,163 @@ class PasswordView extends StackedView<PasswordViewModel> with $PasswordView {
                 valueColor: AlwaysStoppedAnimation<Color>(kcPrimaryColor),
               ),
             )
-          : Column(
-              children: [
-                SizedBox(height: screenHeight(context) <= 850 ? 100 : 140),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/sedologo.png',
-                      height: 45,
-                      color: kcPrimaryColor,
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 68, bottom: 16),
-                  child: Row(
+          : SingleChildScrollView(
+            child: Column(
+                children: [
+                  SizedBox(height: screenHeight(context) <= 850 ? 100 : 140),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Créer un compte",
-                        style: TextStyle(
-                          fontSize: getResponsiveMassiveFontSize(context),
-                          fontWeight: FontWeight.w700,
-                          color: kcPrimaryColorDark,
-                        ),
+                      Image.asset(
+                        'assets/sedologo.png',
+                        height: 45,
+                        color: kcPrimaryColor,
                       ),
                     ],
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 24, bottom: 4),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Mot de passe",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: kcPrimaryColorDark,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextInputField(
-                    height: 40,
-                    controller: passwordController,
-                    onChanged: (value) => viewModel.checkAllInputFull(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        viewModel.passwordVisible
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: kcPrimaryColorDark.withOpacity(0.5),
-                      ),
-                      onPressed: () => viewModel.obscurePassword(),
-                    ),
-                    obscureText: !viewModel.passwordVisible,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 24, bottom: 4),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Confirmer le mot de passe",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: kcPrimaryColorDark,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextInputField(
-                    height: 40,
-                    controller: confirmPasswordController,
-                    onChanged: (value) => viewModel.checkAllInputFull(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        viewModel.passwordVisible
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: kcPrimaryColorDark.withOpacity(0.5),
-                      ),
-                      onPressed: () => viewModel.obscurePassword(),
-                    ),
-                    obscureText: !viewModel.passwordVisible,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const TextComponent(
-                      "Vous avez déjà un compte ?",
-                      fontsize: 12,
-                      fontweight: FontWeight.w400,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        viewModel.goBackToLogin();
-                      },
-                      child: const TextComponent(
-                        "Connectez-vous",
-                        fontsize: 12,
-                        fontweight: FontWeight.w700,
-                        textcolor: kcPrimaryColor,
-                        decoration: TextDecoration.underline,
-                        decorationcolor: kcPrimaryColor,
-                        decorationthinkness: 2,
-                      ),
-                    )
-                  ],
-                ),
-                const Expanded(child: SizedBox()),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 68, bottom: 16),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ButtonBackComponent("Etape précédente", onPressed: () {
-                          viewModel.goBackToRegister();
-                        }),
-                        ButtonComponent(
-                          "Continuer",
-                          isfull: viewModel.allInputFull,
-                          onPressed: () async {
-                            final user = Register(
-                              name: userName,
-                              surname: userSurname,
-                              email: userEmail,
-                              number: userPhone,
-                              password: passwordController.text,
-                            );
-                            Otp otp = Otp(email: userEmail);
-                            await viewModel.register(user, otp);
-                          },
-                          width: 150,
-                          height: 40,
+                        Text(
+                          "Créer un compte",
+                          style: TextStyle(
+                            fontSize: getResponsiveMassiveFontSize(context),
+                            fontWeight: FontWeight.w700,
+                            color: kcPrimaryColorDark,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 24, bottom: 4),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Mot de passe",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: kcPrimaryColorDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: TextInputField(
+                      height: 40,
+                      controller: passwordController,
+                      onChanged: (value) => viewModel.checkAllInputFull(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          viewModel.passwordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: kcPrimaryColorDark.withOpacity(0.5),
+                        ),
+                        onPressed: () => viewModel.obscurePassword(),
+                      ),
+                      obscureText: !viewModel.passwordVisible,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 24, bottom: 4),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Confirmer le mot de passe",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: kcPrimaryColorDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: TextInputField(
+                      height: 40,
+                      controller: confirmPasswordController,
+                      onChanged: (value) => viewModel.checkAllInputFull(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          viewModel.confirmVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: kcPrimaryColorDark.withOpacity(0.5),
+                        ),
+                        onPressed: () => viewModel.obscureConfirmPassword(),
+                      ),
+                      obscureText: !viewModel.confirmVisible,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const TextComponent(
+                        "Vous avez déjà un compte ?",
+                        fontsize: 12,
+                        fontweight: FontWeight.w400,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          viewModel.goBackToLogin();
+                        },
+                        child: const TextComponent(
+                          "Connectez-vous",
+                          fontsize: 12,
+                          fontweight: FontWeight.w700,
+                          textcolor: kcPrimaryColor,
+                          decoration: TextDecoration.underline,
+                          decorationcolor: kcPrimaryColor,
+                          decorationthinkness: 2,
+                        ),
+                      )
+                    ],
+                  ),
+                   SizedBox(height: screenHeight(context) * 0.22),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12, right: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ButtonBackComponent("Etape précédente", onPressed: () {
+                            viewModel.goBackToRegister();
+                          }),
+                          ButtonComponent(
+                            "Continuer",
+                            isfull: viewModel.allInputFull,
+                            onPressed: () async {
+                              final user = Register(
+                                name: userName,
+                                surname: userSurname,
+                                email: userEmail,
+                                number: userPhone,
+                                password: passwordController.text,
+                              );
+                              Otp otp = Otp(email: userEmail, typeOfVerification: "email");
+                              await viewModel.register(user, otp);
+                            },
+                            width: 150,
+                            height: 40,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+          ),
     );
   }
 

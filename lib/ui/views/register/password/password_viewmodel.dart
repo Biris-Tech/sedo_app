@@ -12,6 +12,8 @@ class PasswordViewModel extends FormViewModel {
   bool _allInputFull = false;
   bool get allInputFull => _allInputFull;
   bool _passwordVisible = false;
+  bool _confirmVisible = false;
+  bool get confirmVisible => _confirmVisible;
   bool get passwordVisible => _passwordVisible;
   bool isDone = false;
   final _navigationService = locator<NavigationService>();
@@ -28,6 +30,11 @@ class PasswordViewModel extends FormViewModel {
 
   void obscurePassword() {
     _passwordVisible = !_passwordVisible;
+    rebuildUi();
+  }
+
+  void obscureConfirmPassword() {
+    _confirmVisible = !_confirmVisible;
     rebuildUi();
   }
 

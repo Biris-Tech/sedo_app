@@ -25,17 +25,11 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
     RegisterViewModel viewModel,
     Widget? child,
   ) {
-    final isSmallScreen = MediaQuery.of(context).size.height <= 850;
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: isSmallScreen
-          ? SingleChildScrollView(
-              child: buildContent(context, viewModel),
-            )
-          : buildContent(context, viewModel),
-    );
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: buildContent(context, viewModel),
+        ));
   }
 
   Widget buildContent(BuildContext context, RegisterViewModel viewModel) {
@@ -133,6 +127,7 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
             hintText: "ex: jonhdoe@gmail.com",
             controller: emailController,
             onChanged: (value) => viewModel.checkAllInputFull(),
+            keyboardType: TextInputType.emailAddress,
           ),
         ),
         const Padding(
@@ -182,16 +177,15 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
             )
           ],
         ),
-        if (!isSmallScreen) const Expanded(child: verticalSpaceLarge),
+        SizedBox(height: screenHeight(context) * 0.06),
         Padding(
-          padding: const EdgeInsets.only(right: 16, bottom: 28),
+          padding: const EdgeInsets.only(right: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(),
               SizedBox(
-                width: 184,
-                height: 40,
+               
                 child: ButtonComponent(
                   "Etape suivante",
                   isfull: viewModel.allInputFull,

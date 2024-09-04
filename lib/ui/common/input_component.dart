@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 
 class TextInputField extends StatefulWidget {
   final FocusNode? focusNode;
@@ -87,7 +88,7 @@ class _TextInputFieldState extends State<TextInputField> {
         margin: widget.margin,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(widget.height == 75 ? 16 : 24),
+          borderRadius: BorderRadius.circular(widget.height == screenHeight(context) * 0.10 ? 16 : 24),
           border: Border.all(
             color: kcInputBordersColors.withOpacity(0.3),
             width: 1.5,
@@ -104,7 +105,7 @@ class _TextInputFieldState extends State<TextInputField> {
             autovalidateMode: widget.autovalidate,
             obscureText: widget.obscureText,
             inputFormatters: widget.inputFormatters,
-            textAlign: widget.height == 75 ? TextAlign.center : TextAlign.start,
+            textAlign: widget.height == screenHeight(context) * 0.10 ? TextAlign.center : TextAlign.start,
             decoration: InputDecoration(
               labelText: widget.label,
               // labelStyle: const TextStyle(color: primColor, fontWeight: FontWeight.w500),

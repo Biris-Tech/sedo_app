@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 
 class ButtonComponent extends StatelessWidget {
   final String text;
@@ -47,17 +48,16 @@ class ButtonComponent extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          
           children: [
             TextComponent(
               text,
-              fontweight: FontWeight.w600,
-              fontsize: 14,
+              fontweight: FontWeight.w200,
+              fontsize: screenWidth(context) * 0.04,
               textcolor: Colors.white,
             ),
-            //const Expanded(child: horizontalSpaceSmall),
-            Padding(
-              padding: const EdgeInsets.only(left: 4.0),
-              child: Container(
+             SizedBox(width: screenWidth(context) * 0.02),
+             Container(
                   height: 24,
                   width: 24,
                   decoration: BoxDecoration(
@@ -75,7 +75,7 @@ class ButtonComponent extends StatelessWidget {
                       size: 12,
                     ),
                   )),
-            )
+            
           ],
         ),
       ),
@@ -138,7 +138,6 @@ class ButtonBackComponent extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            //const Expanded(child: horizontalSpaceSmall),
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Container(
@@ -164,7 +163,7 @@ class ButtonBackComponent extends StatelessWidget {
             TextComponent(
               text,
               fontweight: FontWeight.w600,
-              fontsize: 14,
+              fontsize: screenWidth(context) * 0.03,
               textcolor: kcPrimaryColor,
             ),
           ],

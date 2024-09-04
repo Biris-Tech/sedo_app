@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sedo_app/app/app.dialogs.dart';
 import 'package:sedo_app/app/app.locator.dart';
@@ -21,11 +23,7 @@ class OtpService {
     if (response.statusCode == 200) {
       showDialog();
     } else {
-      _dialogService.showCustomDialog(
-        variant: DialogType.infoAlert,
-        title: 'Erreur!',
-        description: 'Code OTP incorrect.',
-      );
+      Get.snackbar("Erreur", "Code d'activation invalide. Veuillez réessayer.", backgroundColor: Colors.red, colorText: Colors.white).show();
     }
   }
 
@@ -36,8 +34,8 @@ class OtpService {
       body: jsonEncode(otp.sendOtpJson()),
       headers: headers,
     );
-    print(jsonEncode(otp.toJson()));
-    print(response.statusCode);
+    print("Json: ${jsonEncode(otp.sendOtpJson())}");
+    print("code: ${response.statusCode}");
   }
 
   void showDialog() {
