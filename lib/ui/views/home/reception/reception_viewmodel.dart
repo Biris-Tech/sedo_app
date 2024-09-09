@@ -6,14 +6,18 @@ import 'package:stacked/stacked.dart';
 
 class ReceptionViewModel extends ReactiveViewModel {
   final _locationService = locator<LocationService>();
-
+  bool isLoad = false;
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     await _fetchLocation();
+    setBusy(false);
+    print('$isBusy');
   }
 
   Future<void> _fetchLocation() async {
+    setBusy(true);
     await _locationService.getLocation();
+    setBusy(false);
     notifyListeners();
   }
 
@@ -29,5 +33,5 @@ class ReceptionViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_locationService ];
+  List<ListenableServiceMixin> get listenableServices => [_locationService];
 }

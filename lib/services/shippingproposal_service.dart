@@ -19,10 +19,11 @@ class ShippingproposalService {
     var response =
         await http.post(url, body: jsonEncode(ship.toJson()), headers: headers);
     print("response ${response.body}");
+        Navigator.pop(context);
+
     if (response.statusCode == 201) {
       if (context.mounted) {
         CourierViewModel courierViewModel = CourierViewModel();
-        Navigator.pop(context);
         courierViewModel.showBillingOptions(context);
       }
     }

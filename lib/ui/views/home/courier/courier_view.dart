@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sedo_app/models/constants.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
 import 'package:sedo_app/ui/common/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
@@ -142,9 +143,7 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                                         color: Color(0xFFB7B7B7)),
                                     borderRadius: BorderRadius.circular(24)),
                               ),
-                              style: const TextStyle(
-                                fontSize: 14
-                              ),
+                              style: const TextStyle(fontSize: 14),
                               initialCountryCode: 'BJ',
                             ),
                           )),
@@ -193,6 +192,17 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                   ),
                 ),
               ),
+            if (viewModel.isBusy) 
+               Container(
+      height: screenHeight(context),
+      width: screenWidth(context),
+      color: Colors.white70,
+      child: const Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(kcPrimaryColor),
+        ),
+      ),
+               )
           ],
         ));
   }

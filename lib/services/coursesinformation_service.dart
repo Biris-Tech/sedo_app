@@ -76,41 +76,18 @@ class CoursesinformationService {
               padding: const EdgeInsets.only(left: 16),
               child: Row(
                 children: [
-                  TextComponent(
-                    "prions d’ajouter un titre à votre course. Ajoutez plus",
-                    fontsize: 14,
-                    fontweight: FontWeight.w400,
-                    textcolor: const Color(0xff202020).withOpacity(0.5),
+                  Flexible(
+                    child: TextComponent(
+                      "prions d’ajouter un titre à votre course. Ajoutez plus de détails pour donner plus d’informations sur votre course au livreur.",
+                      fontsize: 14,
+                      fontweight: FontWeight.w400,
+                      textcolor: const Color(0xff202020).withOpacity(0.5),
+                    ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Row(
-                children: [
-                  TextComponent(
-                    "de détails pour donner plus d’informations sur ",
-                    fontsize: 14,
-                    fontweight: FontWeight.w400,
-                    textcolor: const Color(0xff202020).withOpacity(0.5),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Row(
-                children: [
-                  TextComponent(
-                    "votre course au livreur.",
-                    fontsize: 14,
-                    fontweight: FontWeight.w400,
-                    textcolor: const Color(0xff202020).withOpacity(0.5),
-                  ),
-                ],
-              ),
-            ),
+           
             const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.only(left: 16, bottom: 16),

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:sedo_app/models/api_url.dart';
 import 'package:sedo_app/models/constants.dart';
@@ -131,8 +132,8 @@ class _DestinationAdressState extends State<DestinationAdress> {
     return SizedBox(
       height: screenHeight(context) - 290,
       child: Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Column(
           children: [
             const Padding(
@@ -190,14 +191,17 @@ class _DestinationAdressState extends State<DestinationAdress> {
                           if (context.mounted) {
                             Future.delayed(const Duration(seconds: 3), () {
                               if (context.mounted) {
+                                mapController.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                        CameraPosition(
+                                            target: LatLng(destinationLatitude,
+                                                destinationLongitude), zoom: 10)));
                                 Navigator.pop(context);
                               }
                               !onTapMap
                                   ? destinationAdressInfo
-                                      .bottomSheetDestinationAdressInfo(
-                                          context,
-                                          widget.viewModel,
-                                          widget.onTap)
+                                      .bottomSheetDestinationAdressInfo(context,
+                                          widget.viewModel, widget.onTap)
                                   : destinationAdressInfo
                                       .bottomSheetDestination2AdressInfo(
                                           context,

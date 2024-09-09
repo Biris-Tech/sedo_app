@@ -12,7 +12,7 @@ const headers = {'Content-Type': 'application/json'};
 const String googleApiKey = "AIzaSyAT15yqrfAE4IcwB-Q45GA-j_mYQPafTIY";
 const String kkiapayApiKey = "3928a210406a11ef8cc77f54de9d35c7";
 late GoogleMapController mapController;
-LatLng currentLocation = const LatLng(45.521563, -122.677433);
+LatLng currentLocation = const LatLng(0, 0);
 String deliveryTime = "";
 List<dynamic> bankCard = [1, 2, 3, 4];
 List<String> numInfo = [];

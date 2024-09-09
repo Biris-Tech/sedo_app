@@ -24,6 +24,7 @@ import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/app_dialog.dart';
 import 'package:sedo_app/ui/common/kkiapay_component.dart';
 import 'package:sedo_app/ui/common/location_function.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 import 'package:sedo_app/ui/views/home/courier/courier_view.form.dart';
 import 'package:sedo_app/ui/views/home/home_view.dart';
 import 'package:stacked/stacked.dart';
@@ -46,6 +47,7 @@ class CourierViewModel extends BaseViewModel {
   bool isEspeceTap = false;
   bool isMomoTap = false;
   bool isCardTap = false;
+  bool isPolyLineEnd = false;
   bool isDeliveryExpressTap = false;
   bool get allInputFull => _allInputFull;
   final _locationService = locator<LocationService>();
@@ -112,6 +114,7 @@ class CourierViewModel extends BaseViewModel {
         polylineId: PolylineId(DateTime.now().toString()),
         color: kcPrimaryColor,
         points: polylineCoordinates,
+        width: 3,
       );
       polylines.add(polyline);
       notifyListeners();
@@ -134,6 +137,8 @@ class CourierViewModel extends BaseViewModel {
   }
 
   void setDestinationLocation(String name, double latitude, double longitude) {
+    setBusy(true);
+
     final marker = Marker(
         markerId: MarkerId(name),
         position: LatLng(latitude, longitude),
@@ -144,20 +149,7 @@ class CourierViewModel extends BaseViewModel {
     if (markers.length == 2) {
       fetchAndCreatePolyline();
     }
-    rebuildUi();
-  }
-
-  void createPolyline() {
-    final polyline = Polyline(
-      polylineId: PolylineId(DateTime.now().toString()),
-      color: kcPrimaryColor,
-      points: [
-        LatLng(
-            markers.first.position.latitude, markers.first.position.longitude),
-        LatLng(markers.last.position.latitude, markers.last.position.longitude),
-      ],
-    );
-    polylines.add(polyline);
+    setBusy(false);
     rebuildUi();
   }
 
@@ -180,6 +172,7 @@ class CourierViewModel extends BaseViewModel {
     } else {
       print(result.errorMessage);
     }
+
     return polylineCoordinates;
   }
 
@@ -349,6 +342,8 @@ class CourierViewModel extends BaseViewModel {
     });
   }
 
+
+
   Future<void> createCourses(
       ShippingProposal courses, BuildContext context) async {
     setBusy(true);
@@ -401,8 +396,10 @@ class CourierViewModel extends BaseViewModel {
 
   goToDestinationService(BuildContext context) {
     print("ededed");
+
     _destinationService.bottomSheetDestinationAdress(
         context, destinationAddress, this, () async {
+      Navigator.pop(context);
       await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
           destinationLatitude, destinationLongitude, googleApiKey);
       goToCoursesInfoService(context);
