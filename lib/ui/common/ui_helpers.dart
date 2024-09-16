@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sedo_app/app/app.locator.dart';
+import 'package:sedo_app/main.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 final _navigationService = locator<NavigationService>();
@@ -31,7 +33,7 @@ Widget spacedDivider = const Column(
   ],
 );
 
-void goBack() => _navigationService.back();
+void goBack() => Get.back();
 
 Widget verticalSpace(double height) => SizedBox(height: height);
 

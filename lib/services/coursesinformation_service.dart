@@ -10,7 +10,7 @@ class CoursesinformationService {
   TextEditingController courseDescriptionController = TextEditingController();
 
   Future bottomSheetCoursesInfo(BuildContext context,
-      Function()? onDeliveryPressed, Function()? onPressed) {
+      Function()? onDeliveryPressed, Function()? onPressed, bool isLoading) {
     return showModalBottomSheet(
       backgroundColor: Colors.white,
       isScrollControlled: true,
@@ -21,14 +21,14 @@ class CoursesinformationService {
       builder: (context) {
         return SizedBox(
           height: screenHeight(context) * 0.85,
-          child: buildContent(context, onDeliveryPressed, onPressed),
+          child: buildContent(context, onDeliveryPressed, onPressed, isLoading),
         );
       },
     );
   }
 
   Widget buildContent(BuildContext context, Function()? onDeliveryPressed,
-      Function()? onPressed) {
+      Function()? onPressed, bool isLoading) {
     return SingleChildScrollView(
       child: Padding(
         padding:
@@ -41,7 +41,9 @@ class CoursesinformationService {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () {
+                      goBack();
+                    },
                     child: const Icon(Icons.arrow_back),
                   ),
                   const SizedBox(width: 8),
@@ -87,7 +89,6 @@ class CoursesinformationService {
                 ],
               ),
             ),
-           
             const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.only(left: 16, bottom: 16),
@@ -156,11 +157,12 @@ class CoursesinformationService {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ButtonNextComponent(
+                    ButtonNext1Component(
                       height: 40,
                       width: screenWidth(context) * 0.7,
                       "continuer",
                       onPressed: onPressed,
+                      // isfull: isLoading,
                     ),
                   ],
                 ),

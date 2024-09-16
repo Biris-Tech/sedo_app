@@ -49,6 +49,7 @@ class CourierViewModel extends BaseViewModel {
   bool isCardTap = false;
   bool isPolyLineEnd = false;
   bool isDeliveryExpressTap = false;
+  bool isMapLoad = true;
   bool get allInputFull => _allInputFull;
   final _locationService = locator<LocationService>();
   final _recoveryService = locator<RecoveryadressService>();
@@ -342,18 +343,20 @@ class CourierViewModel extends BaseViewModel {
     });
   }
 
-
-
   Future<void> createCourses(
       ShippingProposal courses, BuildContext context) async {
-    setBusy(true);
+    setBusy(true); // active le loader
+    isMapLoad = false;
     try {
       await _shippingCreateService.createShippingProposal(courses, context);
+      // Action si l'API réussit
       rebuildUi();
     } catch (e) {
       print("Error: $e");
+      // Gestion des erreurs, afficher un message si besoin
     } finally {
-      setBusy(false);
+      setBusy(false); // désactive le loader
+      isMapLoad = true;
     }
   }
 
@@ -388,10 +391,9 @@ class CourierViewModel extends BaseViewModel {
       print("shipping: ${shippingProposal.toJson()}");
       print("recei: ${receiverData.toJson()}");
       print("sender: ${senderData.toJson()}");
-      !isDeliveryExpress
-          ? await createCourses(shippingProposal, context)
-          : await createCourses(shippingProposalDeliveryExpress!, context);
-    });
+      await createCourses(shippingProposal, context);
+      //Navigator.pop(context);
+    }, !isMapLoad);
   }
 
   goToDestinationService(BuildContext context) {
@@ -400,6 +402,7 @@ class CourierViewModel extends BaseViewModel {
     _destinationService.bottomSheetDestinationAdress(
         context, destinationAddress, this, () async {
       Navigator.pop(context);
+      
       await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
           destinationLatitude, destinationLongitude, googleApiKey);
       goToCoursesInfoService(context);

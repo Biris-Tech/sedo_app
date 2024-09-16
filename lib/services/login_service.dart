@@ -34,7 +34,7 @@ class LoginService {
       userId = jsonBody['userId'];
       userName = jsonBody['name'];
       userSurname = jsonBody['surname'];
-    
+      userEmail = jsonBody['email'];
       print("res = $userId");
       print("token = $token");
       _sessionTokenService.storeToken(token);

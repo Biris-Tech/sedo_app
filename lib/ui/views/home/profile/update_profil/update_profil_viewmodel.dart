@@ -1,17 +1,37 @@
+import 'dart:convert';
+
+import 'package:sedo_app/app/app.locator.dart';
+import 'package:sedo_app/models/api_url.dart';
+import 'package:sedo_app/models/constants.dart';
+import 'package:sedo_app/models/user.dart';
+import 'package:sedo_app/services/uidstorage_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:http/http.dart' as http;
 
 class UpdateProfileViewModel extends BaseViewModel {
-  String _phone = "57072691";
+  final _userIdService = locator<UidstorageService>();
 
-  get phone => _phone;
+  UpdateProfileViewModel() {
+    init();
+  }
 
-  String _email = "otisdgn@gmail.com";
+  init() async {
+    userId = (await _userIdService.getUserId())!;
+    print(userId);
+    rebuildUi();
+  }
 
-  get email => _email;
-
-  String _firstname = "Ruben";
-  get firstname => _firstname;
-
-  String _lastname = "DANGBEGNON";
-  get lastname => _lastname;
+  Future<void> updateUser(UserModel user) async {
+    try {
+      var url = Uri.parse('$updateUserRoute/$userId');
+      print(url);
+      var res = await http.put(url,
+          body: jsonEncode(user.toJson()), headers: headers);
+      print(user.toJson());
+      print(res.body);
+      print(res.statusCode);
+    } catch (e) {
+      print('Error updating user: $e');
+    } finally {}
+  }
 }

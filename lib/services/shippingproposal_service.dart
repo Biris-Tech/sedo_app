@@ -16,16 +16,21 @@ class ShippingproposalService {
     userId = (await _userIdService.getUserId())!;
     print("User ID: $userId");
     var url = Uri.parse("$shippingProposalRoute/$userId");
+    Navigator.pop(context);
+    print(ship.toJson());
     var response =
         await http.post(url, body: jsonEncode(ship.toJson()), headers: headers);
+    print("response status: ${response.statusCode}");
     print("response ${response.body}");
-        Navigator.pop(context);
 
     if (response.statusCode == 201) {
       if (context.mounted) {
         CourierViewModel courierViewModel = CourierViewModel();
         courierViewModel.showBillingOptions(context);
       }
+    }
+    else {
+      
     }
   }
 }

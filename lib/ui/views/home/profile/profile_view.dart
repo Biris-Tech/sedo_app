@@ -62,7 +62,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                             SizedBox(
                               width: screenWidth(context) * 0.4,
                               child: TextComponent(
-                                "${viewModel.firstname} ${viewModel.lastname[0]}.",
+                                "${viewModel.firstname} ${viewModel.lastname}.",
                                 textcolor: kcTextGreyColor,
                                 fontsize: 18,
                                 fontweight: FontWeight.w700,

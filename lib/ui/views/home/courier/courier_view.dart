@@ -175,7 +175,7 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                                   isfull: viewModel.allInputFull,
                                   onPressed: () {
                                 // viewModel.isDone = true;
-                                viewModel.stateUpdate();
+                                //viewModel.stateUpdate();
                                 // print(" isDone: ${viewModel.isDone}");
                                 recoveryPhone = recoverynumController.text;
                                 print("recoveryPhone: $recoveryPhone");
@@ -192,17 +192,17 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                   ),
                 ),
               ),
-            if (viewModel.isBusy) 
-               Container(
-      height: screenHeight(context),
-      width: screenWidth(context),
-      color: Colors.white70,
-      child: const Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(kcPrimaryColor),
-        ),
-      ),
-               )
+            if (viewModel.isBusy)
+              Container(
+                height: screenHeight(context),
+                width: screenWidth(context),
+                color: Colors.white70,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(kcPrimaryColor),
+                  ),
+                ),
+              )
           ],
         ));
   }

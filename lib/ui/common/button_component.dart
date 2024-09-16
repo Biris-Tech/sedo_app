@@ -203,7 +203,7 @@ class ButtonNextComponent extends StatelessWidget {
           buttonWidth =
               constraints.maxWidth / 2 - 10; // Adjusted for small screens
         }
-        return Stack(
+        return   Stack(
           children: [
             ElevatedButton(
               onPressed: onPressed,
@@ -268,6 +268,113 @@ class ButtonNextComponent extends StatelessWidget {
                   ),
                 ),
               ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class ButtonNext1Component extends StatelessWidget {
+  final String text;
+  final Function()? onPressed;
+  final Color? buttonColor;
+  final Color? textColor;
+  final double? width;
+  final double? height;
+  final double? fontSize;
+  final bool? isfull;
+  const ButtonNext1Component(
+    this.text, {
+    super.key,
+    this.onPressed,
+    this.buttonColor,
+    this.textColor,
+    this.width,
+    this.height,
+    this.fontSize,
+    this.isfull,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double buttonWidth = width ?? constraints.maxWidth;
+        if (constraints.maxWidth < 400) {
+          buttonWidth =
+              constraints.maxWidth / 2 - 10; // Adjusted for small screens
+        }
+        return  Stack(
+          children: [
+            ElevatedButton(
+              onPressed: onPressed,
+              style: ButtonStyle(
+                backgroundColor:
+                    WidgetStateProperty.all(buttonColor ?? kcPrimaryColor),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+              ),
+              child: SizedBox(
+                height: height ?? 40,
+                width: width,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextComponent(
+                        text,
+                        fontweight: FontWeight.w600,
+                        fontsize: fontSize ?? 16,
+                        textcolor: textColor ?? Colors.white,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Container(
+                          height: 24,
+                          width: 24,
+                          decoration: BoxDecoration(
+                            color: kcPrimaryColor,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: 12,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // if (isfull == false)
+            //   Positioned.fill(
+            //     child: Container(
+            //       height: height ?? 40,
+            //       width: buttonWidth,
+            //       decoration: BoxDecoration(
+            //         color: kcPrimaryColor,
+            //         borderRadius: BorderRadius.circular(24),
+            //       ),
+            //       child: Center(
+            //         child: CircularProgressIndicator.adaptive(
+            //            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
           ],
         );
       },
@@ -397,7 +504,7 @@ class ButtonTrueComponent extends StatelessWidget {
       ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(Colors.white),
+          backgroundColor: WidgetStateProperty.all(kcPrimaryColor),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
@@ -412,7 +519,7 @@ class ButtonTrueComponent extends StatelessWidget {
               text,
               fontweight: FontWeight.w600,
               fontsize: 14,
-              textcolor: kcPrimaryColor,
+              textcolor: Colors.white,
             ),
           ),
         ),
