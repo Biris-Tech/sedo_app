@@ -1,5 +1,7 @@
+import 'package:sedo_app/models/api_url.dart';
 import 'package:sedo_app/models/notification.dart';
 import 'package:stacked/stacked.dart';
+import 'package:http/http.dart' as http;
 
 class NotificationsViewModel extends BaseViewModel {
   List<NotificationModel> notifications = [
@@ -14,4 +16,14 @@ class NotificationsViewModel extends BaseViewModel {
           'Bonne nouvelle ! Un code promo vous est offert en l\'occasion du Ramadan.',
     ),
   ];
+
+  Future<void> getNotifiations() async {
+    var url = Uri.parse(notificationRoute);
+    var response = await http.get(url);
+    print('Response: ${response.body}');
+  }
+
+  NotificationsViewModel() {
+    getNotifiations();
+  }
 }

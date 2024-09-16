@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:sedo_app/models/api_url.dart';
 import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/services/destinationinfo_service.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/input_component.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
 import 'package:sedo_app/ui/common/ui_helpers.dart';
@@ -66,6 +67,7 @@ class _DestinationAdressState extends State<DestinationAdress> {
   String? currentAddress;
   String? sessionToken;
   List<dynamic> placeList = [];
+  bool isProcessing = false; // Variable pour gérer l'état de traitement
 
   @override
   void initState() {
@@ -90,14 +92,9 @@ class _DestinationAdressState extends State<DestinationAdress> {
           '$basePlaceURL?input=$input&key=$googleApiKey&sessiontoken=$sessionToken';
       var response = await http.get(Uri.parse(request));
       var data = json.decode(response.body);
-      if (kDebugMode) {
-        print('mydata');
-        print("data : $data");
-      }
       if (response.statusCode == 200) {
         setState(() {
-          placeList = json.decode(response.body)['predictions'];
-          print("placeList : $placeList");
+          placeList = data['predictions'];
         });
       } else {
         throw Exception('Failed to load predictions');
@@ -107,25 +104,27 @@ class _DestinationAdressState extends State<DestinationAdress> {
     }
   }
 
-  void getPlaceId(String adress) async {
-    String request =
-        '$basePlaceDetailsURL?placeid=$placeId&key=$googleApiKey&sessiontoken=$sessionToken';
-    var response = await http.get(Uri.parse(request));
-    var data = json.decode(response.body);
-    var result = data['result'];
-    var location = data['result']['geometry']['location'];
-    destinationLatitude = location['lat'];
-    destinationLongitude = location['lng'];
-    String name = result['name'];
-    setState(() {
-      currentAddress = name;
-    });
-    widget.onAdressChanged(name);
-    widget.viewModel.setDestinationName(name);
-    widget.viewModel.setDestinationLocation(
-        name, destinationLatitude, destinationLongitude);
-    print(
-        "Latitude: $destinationLatitude, Longitude: $destinationLongitude, name $name");
+  Future getPlaceId(String adress) async {
+    try {
+      String request =
+          '$basePlaceDetailsURL?placeid=$placeId&key=$googleApiKey&sessiontoken=$sessionToken';
+      var response = await http.get(Uri.parse(request));
+      var data = json.decode(response.body);
+      var result = data['result'];
+      var location = data['result']['geometry']['location'];
+      destinationLatitude = location['lat'];
+      destinationLongitude = location['lng'];
+      String name = result['name'];
+      setState(() {
+        currentAddress = name;
+      });
+      widget.onAdressChanged(name);
+      widget.viewModel.setDestinationName(name);
+      widget.viewModel.setDestinationLocation(
+          name, destinationLatitude, destinationLongitude);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -169,10 +168,13 @@ class _DestinationAdressState extends State<DestinationAdress> {
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextInputField(
-                height: 40,
-                controller: _adressController,
-                hintText: "Entrez une adresse",
+              child: Opacity(
+                opacity: isProcessing ? 0.5 : 1.0, // Change d'opacité pendant le traitement
+                child: TextInputField(
+                  height: 40,
+                  controller: _adressController,
+                  hintText: "Entrez une adresse",
+                ),
               ),
             ),
             Expanded(
@@ -184,34 +186,49 @@ class _DestinationAdressState extends State<DestinationAdress> {
                   return Column(
                     children: [
                       InkWell(
-                        onTap: () async {
-                          final destinationAdressInfo =
-                              locator<DestinationinfoService>();
-                          placeId = place['place_id'];
-                          getPlaceId(widget.adress);
-                          if (context.mounted) {
-                            Future.delayed(const Duration(seconds: 3), () {
-                              if (context.mounted) {
-                                mapController.animateCamera(
-                                    CameraUpdate.newCameraPosition(
-                                        CameraPosition(
-                                            target: LatLng(destinationLatitude,
-                                                destinationLongitude), zoom: 10)));
-                                Navigator.pop(context);
-                              }
-                              !onTapMap
-                                  ? destinationAdressInfo
-                                      .bottomSheetDestinationAdressInfo(context,
-                                          widget.viewModel, widget.onTap)
-                                  : destinationAdressInfo
-                                      .bottomSheetDestination2AdressInfo(
-                                          context,
-                                          widget.viewModel,
-                                          widget.onTap);
-                              print("adress $destinationName");
-                            });
-                          }
-                        },
+                        onTap: isProcessing
+                            ? null // Désactive les interactions pendant le traitement
+                            : () async {
+                                setState(() {
+                                  isProcessing = true; // Activer le mode traitement
+                                });
+
+                                final destinationAdressInfo =
+                                    locator<DestinationinfoService>();
+                                placeId = place['place_id'];
+                                await getPlaceId(widget.adress);
+
+                                if (context.mounted) {
+                                  // await Future.delayed(
+                                  //     const Duration(seconds: 3)); // Attente de 3 secondes
+
+                                  mapController.animateCamera(
+                                      CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                              target: LatLng(destinationLatitude,
+                                                  destinationLongitude),
+                                              zoom: 10)));
+                                  Navigator.pop(context);
+
+                                  if (context.mounted) {
+                                    !onTapMap
+                                        ? destinationAdressInfo
+                                            .bottomSheetDestinationAdressInfo(
+                                                context,
+                                                widget.viewModel,
+                                                widget.onTap)
+                                        : destinationAdressInfo
+                                            .bottomSheetDestination2AdressInfo(
+                                                context,
+                                                widget.viewModel,
+                                                widget.onTap);
+                                  }
+                                }
+
+                                setState(() {
+                                  isProcessing = false; // Désactiver le mode traitement
+                                });
+                              },
                         child: ListTile(
                           leading: SvgPicture.asset("assets/mark.svg"),
                           title: TextComponent(
@@ -234,6 +251,10 @@ class _DestinationAdressState extends State<DestinationAdress> {
                 },
               ),
             ),
+            if (isProcessing)
+              LinearProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(kcPrimaryColor),
+              ), // Affiche la barre de progression pendant le traitement
           ],
         ),
       ),

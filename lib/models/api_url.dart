@@ -8,3 +8,4 @@ String basePlaceURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/j
 String basePlaceDetailsURL = 'https://maps.googleapis.com/maps/api/place/details/json';
 String shippingProposalRoute = "$url/proposals";
 String updateUserRoute = "$url/users";
+String notificationRoute = "$url/notifications";

@@ -175,7 +175,7 @@ class CourierView extends StackedView<CourierViewModel> with $CourierView {
                                   isfull: viewModel.allInputFull,
                                   onPressed: () {
                                 // viewModel.isDone = true;
-                                //viewModel.stateUpdate();
+                                viewModel.stateUpdate();
                                 // print(" isDone: ${viewModel.isDone}");
                                 recoveryPhone = recoverynumController.text;
                                 print("recoveryPhone: $recoveryPhone");

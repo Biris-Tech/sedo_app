@@ -37,7 +37,7 @@ class RegisterService {
       _userIdService.storeUserName(userName);
       _userIdService.storeUserSurName(userSurname);
       _userIdService.storeUserEmail(userEmail);
-      _userIdService.storeUserPhone()
+      //_userIdService.storeUserPhone()
 
         print(userId);
         await _otpService.sendOtp(otp);
