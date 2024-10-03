@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sedo_app/models/constants.dart';
-import 'package:sedo_app/ui/views/home/reception/reception_viewmodel.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sedo_app/ui/views/home/reception/reception_viewmodel.dart';
 
 class CustomGoogleMap extends StatelessWidget {
   final Function(GoogleMapController) onMapCreated;
@@ -52,7 +52,8 @@ class MapWidget extends StackedHookView<ReceptionViewModel> {
         ),
       },
       zoomControlsEnabled: false,
-      myLocationButtonEnabled: true,
+      myLocationButtonEnabled: false,
+      
     );
   }
 

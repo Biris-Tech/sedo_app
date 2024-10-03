@@ -1,15 +1,15 @@
+import 'login_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
 import 'package:sedo_app/models/login.dart';
+import 'package:stacked/stacked_annotations.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:sedo_app/ui/common/button_component.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 import 'package:sedo_app/ui/common/input_component.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
-import 'package:sedo_app/ui/common/ui_helpers.dart';
+import 'package:sedo_app/ui/common/button_component.dart';
 import 'package:sedo_app/ui/views/login/login_view.form.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
-import 'login_viewmodel.dart';
 
 @FormView(fields: [
   FormTextField(name: 'phoneOrEmail'),
@@ -29,7 +29,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
       backgroundColor: Colors.white,
       body: viewModel.isBusy
           ? const Center(
-              child: CircularProgressIndicator(
+              child: CircularProgressIndicator.adaptive(
                 valueColor: AlwaysStoppedAnimation<Color>(kcPrimaryColor),
               ),
             )
@@ -90,7 +90,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                   child: Row(
                     children: [
                       Text(
-                        "Mot de passée",
+                        "Mot de passe",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

@@ -1,12 +1,10 @@
 import 'dart:convert';
-
-import 'package:location/location.dart';
-import 'package:sedo_app/app/app.locator.dart';
-import 'package:sedo_app/models/constants.dart';
-import 'package:sedo_app/models/place.dart';
-import 'package:sedo_app/services/location_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
+import 'package:sedo_app/models/place.dart';
+import 'package:sedo_app/models/constants.dart';
+
 
 class PlaceViewModel extends BaseViewModel {
   LocationData? currentLocation;
@@ -16,21 +14,21 @@ class PlaceViewModel extends BaseViewModel {
   Future<void> fetchCurrentLocation() async {
     Location location = Location();
 
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }

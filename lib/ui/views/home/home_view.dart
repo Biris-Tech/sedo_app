@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:stacked/stacked.dart';
-
 import 'home_viewmodel.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:stacked/stacked.dart';
+import 'package:flutter/material.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({super.key});
@@ -39,17 +39,7 @@ class HomeView extends StackedView<HomeViewModel> {
                 )),
             label: 'Accueil',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/PointOnMap.svg',
-                height: 24, width: 24),
-            activeIcon: ShaderMask(
-                shaderCallback: (Rect bounds) {
-                  return linearcolor.createShader(bounds);
-                },
-                child: SvgPicture.asset('assets/PointOnMap.svg',
-                    height: 24, width: 24)),
-            label: 'Lieux',
-          ),
+         
           BottomNavigationBarItem(
             icon:
                 SvgPicture.asset('assets/Delivery.svg', height: 26, width: 24),

@@ -1,11 +1,23 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:kkiapay_flutter_sdk/kkiapay_flutter_sdk.dart';
+import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/ui/common/app_dialog.dart';
 import 'package:sedo_app/ui/views/home/home_view.dart';
+import 'package:sedo_app/services/uidstorage_service.dart';
+import 'package:kkiapay_flutter_sdk/kkiapay_flutter_sdk.dart';
 
-void callback(response, context) {
+String? name;
+String? email;
+String? phone;
+
+void callback(response, context) async {
+  final userIdService = locator<UidstorageService>();
+
+  name = await userIdService.getUserName();
+  email = await userIdService.getUserEmail();
+  phone = await userIdService.getUserPhoneNumber();
+
   switch (response['status']) {
     case PAYMENT_CANCELLED:
       Navigator.pop(context);
@@ -37,19 +49,20 @@ void callback(response, context) {
 final kkiapay = KKiaPay(
   amount: stringToInt(shipPrice),
   countries: const ["BJ", "CI", "SN", "TG"],
-  phone: "22961000000",
-  name: userName,
-  email: userEmail,
+  phone: phone,
+  name: name,
+  email: email,
   reason: 'Transaction reason',
   data: 'Fake data',
-  sandbox: true,
-  apikey: kkiapayApiKey,
+  sandbox: false,
+  apikey: "bedf6ccc3cdefb1f421450cccc51b3f79694af2f",
   callback: callback, // Using context here directly might cause issues.
   theme: defaultTheme,
-  paymentMethods: ["momo", "card"],
+  paymentMethods: const ["momo", "card"],
 );
 
 int stringToInt(String numberString) {
+  print('shippy: $shipPrice');
   double numberDouble = double.parse(numberString);
   int numberInt = numberDouble.round();
   return numberInt;

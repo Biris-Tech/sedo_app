@@ -1,20 +1,19 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sedo_app/models/api_url.dart';
+import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
-import 'package:sedo_app/services/destinationinfo_service.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 import 'package:sedo_app/ui/common/input_component.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
-import 'package:sedo_app/ui/common/ui_helpers.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sedo_app/services/destinationinfo_service.dart';
 import 'package:sedo_app/ui/views/home/courier/courier_viewmodel.dart';
-import 'package:provider/provider.dart';
-import 'package:sedo_app/app/app.locator.dart';
 
 class DestinationadressService {
   Future bottomSheetDestinationAdress(BuildContext context, String adress,
@@ -252,7 +251,7 @@ class _DestinationAdressState extends State<DestinationAdress> {
               ),
             ),
             if (isProcessing)
-              LinearProgressIndicator(
+              const LinearProgressIndicator(
                 valueColor: AlwaysStoppedAnimation(kcPrimaryColor),
               ), // Affiche la barre de progression pendant le traitement
           ],

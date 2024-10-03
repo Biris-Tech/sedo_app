@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sedo_app/ui/common/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/ui/common/app_card.dart';
-import 'package:sedo_app/ui/common/button_component.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/input_component.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
+import 'package:sedo_app/ui/common/button_component.dart';
 
 class BillingoptionsService {
   Future bottomSheetBillingOptions(
@@ -101,11 +102,27 @@ class BillingoptionsService {
                                 ),
                               ),
                               const Expanded(child: SizedBox()),
-                              ButtonNextComponent("continuer",
-                                  onPressed: onPressed),
+                  Stack(
+                    children: [
+                      ButtonNextComponent("continuer", onPressed: onPressed),
+                      if (coursesStatus != "ACCEPTED") // Vérification du statut
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white70, // Couleur semi-transparente pour blanchir
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                             ],
                           ),
-                        ))
+                        )),
+                    if (coursesStatus != "ACCEPTED")
+                      const LinearProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(kcPrimaryColor),
+                      ),
                   ],
                 ),
               ),
@@ -253,7 +270,7 @@ class BillingoptionsService {
     String selectedPayementIconPath,
     String deliveryPrice,
     String ancientPrice,
-    int remainingTimes,
+    String remainingTimes,
     Function()? onPressed,
     //Function()? onEspecePressed,
   ) {
@@ -283,7 +300,7 @@ class BillingoptionsService {
                             width: 8,
                           ),
                           const TextComponent(
-                            "Recherche d'un coursier",
+                            "Coursier potentiel trouvé",
                             fontsize: 18,
                             fontweight: FontWeight.w700,
                             textcolor: Color(0xFF202020),
@@ -337,4 +354,90 @@ class BillingoptionsService {
               ),
             ));
   }
+
+  Future bottomSheetCoursesOnLoad(
+  BuildContext context,
+  Function()? onPressed,
+) {
+  return showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.white,
+    isScrollControlled: true,
+    isDismissible: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+    ),
+    builder: (context) => Container(
+      child: SizedBox(
+        height: 233,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    "assets/Box.svg", // Icone de livraison
+                    height: 24,
+                    width: 24,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  const TextComponent(
+                    "Livraison en cours",  // Changement du texte
+                    fontsize: 18,
+                    fontweight: FontWeight.w700,
+                    textcolor: Color(0xFF202020),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: courierCardInProgress(
+              ),
+            ),
+            const Expanded(child: SizedBox()),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 28),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                  
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    
+                    const Expanded(child: SizedBox()),
+                   Stack(
+                    children: [
+                      ButtonNextComponent("continuer", onPressed: onPressed),
+                      if (coursesStatus != "COMPLETED") // Vérification du statut
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white70, // Couleur semi-transparente pour blanchir
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  ],
+                ),
+              ),
+            ),
+              if (coursesStatus != "COMPLETED")
+                      const LinearProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(kcPrimaryColor),
+                      ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 }

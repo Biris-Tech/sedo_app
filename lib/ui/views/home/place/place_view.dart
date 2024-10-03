@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 import 'place_viewmodel.dart';
+import 'package:stacked/stacked.dart';
+import 'package:flutter/material.dart';
 
 class PlaceView extends StackedView<PlaceViewModel> {
   const PlaceView({super.key});
@@ -23,9 +23,9 @@ class PlaceView extends StackedView<PlaceViewModel> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Entrez le nom du restaurant',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     viewModel.fetchRestaurants(
                         ''); // You may want to use a more specific query here

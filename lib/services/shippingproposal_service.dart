@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/api_url.dart';
+import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/models/shippingproposal.dart';
 import 'package:sedo_app/services/uidstorage_service.dart';
@@ -24,13 +24,19 @@ class ShippingproposalService {
     print("response ${response.body}");
 
     if (response.statusCode == 201) {
+      final jsonBody = json.decode(response.body);
+      shipId = jsonBody['shippingProposal']['id'];
+      var url = Uri.parse("$shippingProposalRoute/$shipId");
+      var respon = await http.get(url);
+      final jsondec = json.decode(respon.body);
+      print(jsondec);
+      coursesStatus = jsondec['status'];
+      print('shipId: $shipId');
+      print(respon.body);
       if (context.mounted) {
         CourierViewModel courierViewModel = CourierViewModel();
         courierViewModel.showBillingOptions(context);
       }
-    }
-    else {
-      
-    }
+    } else {}
   }
 }

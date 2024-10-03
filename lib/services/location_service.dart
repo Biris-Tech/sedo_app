@@ -1,7 +1,7 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:stacked/stacked.dart';
 import 'package:location/location.dart';
 import 'package:sedo_app/models/constants.dart';
-import 'package:stacked/stacked.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService with ListenableServiceMixin {
   Future<void> getLocation() async {
@@ -31,3 +31,5 @@ class LocationService with ListenableServiceMixin {
     mapController.animateCamera(CameraUpdate.newLatLng(currentLocation));
   }
 }
+
+ 

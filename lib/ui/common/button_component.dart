@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:sedo_app/ui/common/text_components.dart';
 import 'package:sedo_app/ui/common/ui_helpers.dart';
+import 'package:sedo_app/ui/common/text_components.dart';
 
 class ButtonComponent extends StatelessWidget {
   final String text;
@@ -52,7 +52,7 @@ class ButtonComponent extends StatelessWidget {
           children: [
             TextComponent(
               text,
-              fontweight: FontWeight.w200,
+              fontweight: FontWeight.w700,
               fontsize: screenWidth(context) * 0.04,
               textcolor: Colors.white,
             ),

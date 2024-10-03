@@ -1,10 +1,9 @@
 import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:sedo_app/app/app.locator.dart';
-import 'package:sedo_app/main.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 
 final _navigationService = locator<NavigationService>();
 

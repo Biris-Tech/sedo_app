@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sedo_app/models/app_image_constants.dart';
-import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:stacked/stacked.dart';
-
-import '../../../common/text_components.dart';
-import '../../../common/ui_helpers.dart';
 import 'profile_viewmodel.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:stacked/stacked.dart';
+import 'package:flutter/material.dart';
+import '../../../common/ui_helpers.dart';
+import '../../../common/text_components.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
+import 'package:sedo_app/models/app_image_constants.dart';
+
 
 class ProfileView extends StackedView<ProfileViewModel> {
   const ProfileView({super.key});
@@ -33,7 +33,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ),
               verticalSpaceMedium,
               Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     color: kcTextGreyColor.withOpacity(0.05)),
@@ -62,7 +62,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                             SizedBox(
                               width: screenWidth(context) * 0.4,
                               child: TextComponent(
-                                "${viewModel.firstname} ${viewModel.lastname}.",
+                                "${viewModel.firstname} ${viewModel.lastname}",
                                 textcolor: kcTextGreyColor,
                                 fontsize: 18,
                                 fontweight: FontWeight.w700,

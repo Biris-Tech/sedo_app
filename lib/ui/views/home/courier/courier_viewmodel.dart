@@ -1,33 +1,37 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'dart:io' show Platform;
+import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sedo_app/models/api_url.dart';
 import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
-import 'package:sedo_app/models/receiverdata.dart';
 import 'package:sedo_app/models/senderdata.dart';
-import 'package:sedo_app/models/shippingproposal.dart';
-import 'package:sedo_app/services/billingoptions_service.dart';
-import 'package:sedo_app/services/cardcreate_service.dart';
-import 'package:sedo_app/services/cardlist_service.dart';
-import 'package:sedo_app/services/coursesinformation_service.dart';
-import 'package:sedo_app/services/deliveryfinalization_service.dart';
-import 'package:sedo_app/services/destinationadress_service.dart';
-import 'package:sedo_app/services/destinationinfo_service.dart';
-import 'package:sedo_app/services/expressdelivery_service.dart';
-import 'package:sedo_app/services/location_service.dart';
-import 'package:sedo_app/services/numcreate_service.dart';
-import 'package:sedo_app/services/numlist_service.dart';
-import 'package:sedo_app/services/recoveryadress_service.dart';
-import 'package:sedo_app/services/shippingproposal_service.dart';
+import 'package:sedo_app/models/receiverdata.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:sedo_app/ui/common/app_dialog.dart';
+import 'package:sedo_app/models/shippingproposal.dart';
+import 'package:sedo_app/services/numlist_service.dart';
+import 'package:sedo_app/services/cardlist_service.dart';
+import 'package:sedo_app/services/location_service.dart';
+import 'package:sedo_app/ui/common/ioslocation_func.dart';
+import 'package:sedo_app/services/numcreate_service.dart';
+import 'package:sedo_app/services/cardcreate_service.dart';
 import 'package:sedo_app/ui/common/kkiapay_component.dart';
 import 'package:sedo_app/ui/common/location_function.dart';
-import 'package:sedo_app/ui/common/ui_helpers.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sedo_app/services/billingoptions_service.dart';
+import 'package:sedo_app/services/recoveryadress_service.dart';
+import 'package:sedo_app/services/destinationinfo_service.dart';
+import 'package:sedo_app/services/expressdelivery_service.dart';
+import 'package:sedo_app/services/shippingproposal_service.dart';
+import 'package:sedo_app/services/destinationadress_service.dart';
+import 'package:sedo_app/services/coursesinformation_service.dart';
+import 'package:sedo_app/services/deliveryfinalization_service.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:sedo_app/ui/views/home/courier/courier_view.form.dart';
-import 'package:sedo_app/ui/views/home/home_view.dart';
-import 'package:stacked/stacked.dart';
 
 class CourierViewModel extends BaseViewModel {
   String destinationAddress = "";
@@ -71,11 +75,14 @@ class CourierViewModel extends BaseViewModel {
   int mapTap = 0;
   LatLng? _startLocation;
   LatLng? _endLocation;
+  Timer? _timer;
 
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     print("locate1 $currentLocation");
-    await _locationService.getLocation();
+    Platform.isAndroid
+        ? await _locationService.getLocation()
+        : await getCurrentPosition();
     print("locate $currentLocation");
   }
 
@@ -129,9 +136,7 @@ class CourierViewModel extends BaseViewModel {
         position: LatLng(latitude, longitude),
         infoWindow: InfoWindow(title: name),
         icon: BitmapDescriptor.defaultMarker);
-    if (mapController != null) {
-      moveCamera(marker.position);
-    }
+    moveCamera(marker.position);
     markers.add(marker);
     print("markers: $markers");
     rebuildUi();
@@ -207,7 +212,7 @@ class CourierViewModel extends BaseViewModel {
       Marker marker = Marker(
         markerId: markerId,
         position: position,
-        infoWindow: InfoWindow(title: "New Location"),
+        infoWindow: const InfoWindow(title: "New Location"),
         draggable: true,
         icon: markerIcon,
         onDragEnd: (LatLng newPosition) {
@@ -249,6 +254,15 @@ class CourierViewModel extends BaseViewModel {
     }
   }
 
+  Future getprice() async {
+    Platform.isAndroid
+        ? await _locationService.getLocation()
+        : await getCurrentPosition();
+
+    await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
+        currentLocation.latitude, currentLocation.longitude, googleApiKey);
+  }
+
   void setPaymentMethod(String name, String iconPath) {
     selectedPaymentMethodName = name;
     selectedPaymentMethodIconPath = iconPath;
@@ -283,6 +297,10 @@ class CourierViewModel extends BaseViewModel {
     _recoveryService.bottomSheetRecoveryAdress(context, recoveryAdress, this);
   }
 
+  void someFunction() async {
+    await getprice(); // Attends que la distance soit calculée avant de lancer le paiement
+  }
+
   showBillingOptions(BuildContext context) {
     _billingOptionsService.bottomSheetBillingOptions(context, () {
       print("deliveryTime: $deliveryTime");
@@ -292,25 +310,29 @@ class CourierViewModel extends BaseViewModel {
           selectedPaymentMethodIconPath,
           stringToInt(shipPrice).toString(),
           stringToInt(3500.toString()).toString(),
-          15, () {
-        // Navigator.pop(context);
-        _coursesfinalisationService.bottomSheetDeliveryFinalization(
-            context,
-            stringToInt(shipPrice).toString(),
-            stringToInt(3100.toString()).toString(),
-            10,
-            25,
-            "Steven DOSSOU",
-            "assets/profil.jpeg",
-            "Ordinateur portable",
-            "Un ordinateur portable Dell XPS 13 flambant neuf attend son nouveau propriétaire ! Emballé dans un carton marron de dimensions 30x40x10cm, il ne pèse que 1,5kg. Sonnez à la porte s'il vous plaît et laissez-le devant la porte si personne ne répond. Merci d'avance !",
-            selectedPaymentMethodIconPath,
-            selectedPaymentMethodName,
-            deliveryTime, () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => kkiapay),
-          );
+          (deliveryTime), () {
+        Navigator.pop(context);
+        startPolling(
+            shipId); // Assure-toi que l'objet `ShippingProposal` contient l'ID de la course
+        rebuildUi();
+        _billingOptionsService.bottomSheetCoursesOnLoad(context, () async {
+          stopPolling();
+          print('dffg');
+          _coursesfinalisationService.bottomSheetDeliveryFinalization(
+              context,
+              stringToInt(shipPrice).toString(),
+              stringToInt(3100.toString()).toString(),
+              deliveryTime,
+              deliveryTime,
+              "Steven DOSSOU",
+              "assets/profil.jpeg",
+              "Ordinateur portable",
+              "Un ordinateur portable Dell XPS 13 flambant neuf attend son nouveau propriétaire ! Emballé dans un carton marron de dimensions 30x40x10cm, il ne pèse que 1,5kg. Sonnez à la porte s'il vous plaît et laissez-le devant la porte si personne ne répond. Merci d'avance !",
+              selectedPaymentMethodIconPath,
+              selectedPaymentMethodName,
+              deliveryTime, () {
+            Get.to(kkiapay);
+          });
         });
       });
     }, () {
@@ -343,13 +365,44 @@ class CourierViewModel extends BaseViewModel {
     });
   }
 
+  Future<void> startPolling(String courseId) async {
+    print('begin');
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      await fetchCourseStatus(courseId);
+    });
+  }
+
+  Future<void> stopPolling() async {
+    _timer?.cancel();
+  }
+
+  Future<void> fetchCourseStatus(String courseId) async {
+    final response =
+        await http.get(Uri.parse("$shippingProposalRoute/$courseId"));
+    final data = json.decode(response.body);
+
+    coursesStatus = data['status'];
+    print('courses: $coursesStatus');
+    notifyListeners();
+
+    // Arrêter le polling si la course est terminée ou annulée
+    if (coursesStatus == 'COMPLETED' || coursesStatus == 'ACCEPTED') {
+      print('évor');
+      stopPolling();
+    }
+  }
+
+  // Appeler startPolling après la création de la course
   Future<void> createCourses(
       ShippingProposal courses, BuildContext context) async {
     setBusy(true); // active le loader
     isMapLoad = false;
     try {
       await _shippingCreateService.createShippingProposal(courses, context);
-      // Action si l'API réussit
+
+      // Démarre le polling avec l'ID de la course créée
+      startPolling(
+          shipId); // Assure-toi que l'objet `ShippingProposal` contient l'ID de la course
       rebuildUi();
     } catch (e) {
       print("Error: $e");
@@ -358,6 +411,12 @@ class CourierViewModel extends BaseViewModel {
       setBusy(false); // désactive le loader
       isMapLoad = true;
     }
+  }
+
+  @override
+  void dispose() {
+    stopPolling(); // Arrête le polling lors de la destruction du widget
+    super.dispose();
   }
 
   goToCoursesInfoService(BuildContext context) {
@@ -402,9 +461,11 @@ class CourierViewModel extends BaseViewModel {
     _destinationService.bottomSheetDestinationAdress(
         context, destinationAddress, this, () async {
       Navigator.pop(context);
-      
+
       await getDistanceBetweenPoints(recoveryLatitude, recoveryLongitude,
           destinationLatitude, destinationLongitude, googleApiKey);
+      await calculateDuration(recoveryLatitude, recoveryLongitude,
+          destinationLatitude, destinationLongitude);
       goToCoursesInfoService(context);
     });
   }

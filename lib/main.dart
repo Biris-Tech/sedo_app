@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sedo_app/app/app.bottomsheets.dart';
+import 'package:sedo_app/app/app.router.dart';
 import 'package:sedo_app/app/app.dialogs.dart';
 import 'package:sedo_app/app/app.locator.dart';
-import 'package:sedo_app/app/app.router.dart';
-import 'package:sedo_app/services/tokensession_service.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sedo_app/app/app.bottomsheets.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:get/get.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,19 +1,18 @@
-import 'package:flutter/material.dart';
+import 'otp_viewmodel.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:stacked/stacked.dart';
+import 'package:flutter/material.dart';
+import 'package:sedo_app/models/otp.dart';
 import 'package:sedo_app/app/app.locator.dart';
 import 'package:sedo_app/models/constants.dart';
-import 'package:sedo_app/models/otp.dart';
+import 'package:stacked/stacked_annotations.dart';
 import 'package:sedo_app/services/otp_service.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:sedo_app/ui/common/button_component.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 import 'package:sedo_app/ui/common/input_component.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
-import 'package:sedo_app/ui/common/ui_helpers.dart';
+import 'package:sedo_app/ui/common/button_component.dart';
 import 'package:sedo_app/ui/views/otp/otp_view.form.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
-import 'otp_viewmodel.dart';
 
 @FormView(fields: [
   FormTextField(name: 'otp1'),
@@ -174,7 +173,7 @@ class OtpView extends StackedView<OtpViewModel> with $OtpView {
                           Otp otp = Otp(
                               email: userEmail, typeOfVerification: "email");
                           otpService.sendOtp(otp);
-                          Get.snackbar("Info", "Un nouveau code a été envoyé à $userEmail", snackPosition: SnackPosition.TOP, backgroundColor: KcGreenColor, duration: Duration(seconds: 3), colorText: Colors.white);
+                          Get.snackbar("Info", "Un nouveau code a été envoyé à $userEmail", snackPosition: SnackPosition.TOP, backgroundColor: KcGreenColor, duration: const Duration(seconds: 3), colorText: Colors.white);
                         },
                         child: const TextComponent(
                           "Renvoyer le code",

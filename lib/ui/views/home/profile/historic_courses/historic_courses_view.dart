@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:flutter/material.dart';
 import 'historic_courses_viewmodel.dart';
 
+
 class HistoricCoursesView extends StackedView<HistoricCoursesViewModel> {
-  const HistoricCoursesView({Key? key}) : super(key: key);
+  const HistoricCoursesView({super.key});
 
   @override
   Widget builder(
@@ -13,7 +13,7 @@ class HistoricCoursesView extends StackedView<HistoricCoursesViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
         padding: const EdgeInsets.only(left: 25.0, right: 25.0),
       ),

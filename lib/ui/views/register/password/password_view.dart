@@ -1,15 +1,15 @@
+import 'password_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
-import 'package:sedo_app/models/constants.dart';
 import 'package:sedo_app/models/otp.dart';
 import 'package:sedo_app/models/register.dart';
+import 'package:sedo_app/models/constants.dart';
+import 'package:stacked/stacked_annotations.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:sedo_app/ui/common/button_component.dart';
+import 'package:sedo_app/ui/common/ui_helpers.dart';
 import 'package:sedo_app/ui/common/input_component.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
-import 'package:sedo_app/ui/common/ui_helpers.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
-import 'password_viewmodel.dart';
+import 'package:sedo_app/ui/common/button_component.dart';
 import 'package:sedo_app/ui/views/register/password/password_view.form.dart';
 
 @FormView(fields: [
@@ -29,7 +29,7 @@ class PasswordView extends StackedView<PasswordViewModel> with $PasswordView {
       backgroundColor: Colors.white,
       body: viewModel.isBusy
           ? const Center(
-              child: CircularProgressIndicator(
+              child: CircularProgressIndicator.adaptive(
                 valueColor: AlwaysStoppedAnimation<Color>(kcPrimaryColor),
               ),
             )

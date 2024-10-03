@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/material.dart';
 import 'package:sedo_app/ui/common/app_colors.dart';
 import 'package:sedo_app/ui/common/text_components.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BillCard extends StatefulWidget {
   final String iconPath;
@@ -75,7 +75,7 @@ class _BillCardState extends State<BillCard> {
 }
 
 Container courierCard(
-    String deliveryPrice, String ancientPrice, int remainingTimes) {
+    String deliveryPrice, String ancientPrice, String remainingTimes) {
   return Container(
     height: 62,
     decoration: BoxDecoration(
@@ -131,7 +131,7 @@ Container courierCard(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextComponent(
-                    "À $remainingTimes min du point de récupération",
+                    "À $remainingTimes du point de récupération",
                     fontweight: FontWeight.w400,
                     fontsize: 12,
                     textcolor: kcDarkGreyColor.withOpacity(0.4),
@@ -143,6 +143,49 @@ Container courierCard(
                     textcolor: kcDarkGreyColor,
                   ),
                 ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+      ],
+    ),
+  );
+}
+
+Container courierCardInProgress() {
+  return Container(
+    height: 62,
+    decoration: BoxDecoration(
+      color: const Color(0xFFB7B7B7).withOpacity(0.2),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Row(
+      children: [
+        const SizedBox(width: 8),
+        SvgPicture.asset(
+          "assets/Scooter.svg", // Icône du scooter
+          height: 24,
+          width: 24,
+        ),
+        const SizedBox(width: 12),
+        const Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 8),
+              TextComponent(
+                "Zem coursier",
+                fontweight: FontWeight.w600,
+                fontsize: 14,
+                textcolor: kcDarkGreyColor,
+              ),
+              SizedBox(height: 4),
+              TextComponent(
+                "Le livreur vous contactera une fois sur place.",
+                fontweight: FontWeight.w400,
+                fontsize: 12,
+                textcolor: Color(0xFF202020),
               ),
             ],
           ),
@@ -210,7 +253,7 @@ Container courierInfoCard(String courierName, String courierProfil) {
   );
 }
 
-Container deliveryDurationCard(int remainingTimes) {
+Container deliveryDurationCard(String remainingTimes) {
   return Container(
     height: 62,
     decoration: BoxDecoration(
@@ -242,7 +285,7 @@ Container deliveryDurationCard(int remainingTimes) {
                 height: 4,
               ),
               TextComponent(
-                "$remainingTimes min",
+                "$remainingTimes",
                 fontweight: FontWeight.w400,
                 fontsize: 12,
                 textcolor: kcDarkGreyColor.withOpacity(0.4),

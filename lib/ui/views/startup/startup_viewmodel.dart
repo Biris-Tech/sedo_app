@@ -1,8 +1,6 @@
-import 'package:sedo_app/services/tokensession_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sedo_app/app/app.locator.dart';
-import 'package:sedo_app/app/app.router.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:sedo_app/services/tokensession_service.dart';
 
 class StartupViewModel extends BaseViewModel {
   final tokenService = locator<TokensessionService>();

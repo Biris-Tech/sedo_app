@@ -10,7 +10,7 @@ class UidstorageService {
 
    Future<void> storeUserName(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user_surname', name);
+    await prefs.setString('user_name', name);
   }
 
     Future<void> storeUserSurName(String surname) async {

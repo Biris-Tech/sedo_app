@@ -1,5 +1,5 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 String userId = "";
 String token = "";
@@ -10,7 +10,7 @@ String userEmail = "";
 String userPhone = "";
 const headers = {'Content-Type': 'application/json'};
 const String googleApiKey = "AIzaSyAT15yqrfAE4IcwB-Q45GA-j_mYQPafTIY";
-const String kkiapayApiKey = "3928a210406a11ef8cc77f54de9d35c7";
+const String kkiapayApiKey = "pk_5024b71b56965681cdd4439788aa3e45591a429f0e391161899a27ce1f8ff1f9";
 late GoogleMapController mapController;
 LatLng currentLocation = const LatLng(0, 0);
 String deliveryTime = "";
@@ -36,3 +36,6 @@ String region = "";
 double distance = 0;
 String shipPrice = "";
 bool onTapMap = false;
+String shipId = "";
+String coursesStatus = "";
+

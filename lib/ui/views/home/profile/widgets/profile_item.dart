@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sedo_app/models/app_image_constants.dart';
-import 'package:sedo_app/ui/common/app_colors.dart';
-import 'package:sedo_app/ui/views/home/profile/profile_viewmodel.dart';
-
-import '../../../../common/text_components.dart';
 import '../../../../common/ui_helpers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../common/text_components.dart';
+import 'package:sedo_app/ui/common/app_colors.dart';
+import 'package:sedo_app/models/app_image_constants.dart';
 
 class ProfileItem extends StatefulWidget {
   const ProfileItem(
@@ -21,16 +19,7 @@ class ProfileItem extends StatefulWidget {
   @override
   _ProfileItemState createState() => _ProfileItemState();
 }
-
 class _ProfileItemState extends State<ProfileItem> {
-  late String _currentValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentValue = widget.itemValue;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +43,7 @@ class _ProfileItemState extends State<ProfileItem> {
               ),
               verticalSpaceSmall,
               TextComponent(
-                _currentValue,
+                widget.itemValue,  // Directement à partir de widget.itemValue
                 fontweight: FontWeight.w400,
                 fontsize: getResponsiveFontSize(context, max: 12),
                 textcolor: const Color(0xFF150B3D).withOpacity(0.4),
@@ -76,7 +65,7 @@ class _ProfileItemState extends State<ProfileItem> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        String editedValue = _currentValue;
+        String editedValue = widget.itemValue; // Utiliser widget.itemValue
 
         return AlertDialog(
           backgroundColor: Colors.white,
@@ -86,11 +75,11 @@ class _ProfileItemState extends State<ProfileItem> {
             style: const TextStyle(fontSize: 16),
           ),
           content: TextField(
-            onSubmitted: (value) {
+            onChanged: (value) {
               editedValue = value;
             },
-            controller: TextEditingController(text: _currentValue),
-            decoration: InputDecoration(
+            controller: TextEditingController(text: widget.itemValue),
+            decoration: const InputDecoration(
               labelText: 'Nouvelle valeur',
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: kcPrimaryColor),
@@ -117,10 +106,7 @@ class _ProfileItemState extends State<ProfileItem> {
                 textcolor: kcPrimaryColor,
               ),
               onPressed: () {
-                setState(() {
-                  _currentValue = editedValue;
-                });
-                widget.onChanged(editedValue); // Notify the parent widget of the change
+                widget.onChanged(editedValue); // Mise à jour via le parent
                 Navigator.pop(context);
               },
             ),
